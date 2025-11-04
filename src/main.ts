@@ -26,6 +26,7 @@ class Game {
     this.grid = new Grid(options.grid, tiles, options.textures)
     this.canvas = this.#generateCanvas(options.container)
     this.c = this.canvas.getContext("2d")!
+    this.c.imageSmoothingEnabled = false
     this.scale = NaN
     this.#resizeCanvas()
   }
@@ -37,17 +38,14 @@ class Game {
   #getScale() {
     const gridRatio = this.grid.aspectRatio
     const screenRatio = window.innerWidth / window.innerHeight
-    if (gridRatio > screenRatio) {
-      return window.innerWidth / this.grid.width
-    } else {
-      return window.innerHeight / this.grid.height
-    }
+    return (gridRatio > screenRatio ? window.innerWidth / this.grid.width : window.innerHeight / this.grid.height)
   }
   #resizeCanvas(): boolean {
     if (this.scale == this.#getScale()) return false
     this.scale = this.#getScale()
     this.canvas.width = this.scale * this.grid.width
     this.canvas.height = this.scale * this.grid.height
+    this.c.imageSmoothingEnabled = false
     return true
   }
   update() {
