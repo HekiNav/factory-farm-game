@@ -1,16 +1,20 @@
 import Grid, { type GridOptions } from './classes/Grid'
 import { ColorTile } from './classes/tiles/ColorTile'
 import { EmptyTile } from './classes/tiles/EmptyTile'
+import { FarmlandTile } from './classes/tiles/FarmlandTile'
+import { TextureSheet } from './classes/TileSheet'
 import './style.css'
 const BASE_URL = import.meta.env.BASE_URL
 
 interface GameOptions {
   grid: GridOptions,
-  container: string
+  container: string,
+  textures: TextureSheet
 }
 const tiles = {
   "empty": EmptyTile,
-  "color": ColorTile
+  "color": ColorTile,
+  "farmland": FarmlandTile
 }
 
 class Game {
@@ -19,7 +23,7 @@ class Game {
   c: CanvasRenderingContext2D
   scale: number
   constructor(options: GameOptions) {
-    this.grid = new Grid(options.grid, tiles)
+    this.grid = new Grid(options.grid, tiles, options.textures)
     this.canvas = this.#generateCanvas(options.container)
     this.c = this.canvas.getContext("2d")!
     this.scale = NaN
@@ -55,16 +59,30 @@ class Game {
 }
 
 async function getLevel(name: string) {
-  return await (await fetch(BASE_URL + "levels/" + name + ".json")).json()
+  return await getJson(BASE_URL + "levels/" + name + ".json")
+}
+async function getJson(url: string) {
+  return await (await fetch(url)).json()
 }
 
-getLevel("test").then((json) => {
-  const game = new Game({
-    grid: {
-      data: json,
-      tileSize: 64
-    },
-    container: "#game"
+Promise.all([getLevel("test"), getJson(BASE_URL + "sprites/index.json")]).then(([levelData, tileData]) => {
+  const textureImage = new Image()
+  textureImage.src = "/sprites/tiles.png"
+  console.log("LOADING TEXTURES")
+  textureImage.addEventListener("load", () => {
+    console.log("LOADED TEXTURES")
+
+    const textureSheet = new TextureSheet(textureImage, tileData)
+
+    const game = new Game({
+      grid: {
+        data: levelData,
+        tileSize: 16
+      },
+      container: "#game",
+      textures: textureSheet
+    })
+    game.update()
   })
-  game.update()
+
 })
