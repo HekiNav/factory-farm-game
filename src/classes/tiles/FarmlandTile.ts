@@ -6,7 +6,6 @@ export class FarmlandTile extends TextureTile{
         super(x, y, size, textures, "farmland")
     }
     update(c: CanvasRenderingContext2D, scale: number) {
-        console.log("farmland update")
         this.draw(c, scale)
     }
 }
