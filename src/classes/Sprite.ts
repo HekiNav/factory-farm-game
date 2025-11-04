@@ -9,10 +9,8 @@ export class Sprite {
         this.width = width
         this.height = height
     }
-    draw(c: CanvasRenderingContext2D, scale: number) {
-        const testColors = ["black", "white"]
-        c.fillStyle = testColors[Math.floor(Math.random() * testColors.length)]
-        console.log(this.x,this.y, this.height, scale)
-        c.fillRect(this.x * scale, this.y * scale, this.width * scale, this.height * scale)
+    draw(_c: CanvasRenderingContext2D, _scale: number) {
+        // default, do nothing
+        // draw functions declared in extended classes
     }
 }
