@@ -51,7 +51,7 @@ class Game {
   update() {
     this.c.clearRect(0, 0, this.grid.width * this.scale, this.grid.height * this.scale)
     this.#resizeCanvas()
-    this.grid.draw(this.c, this.scale)
+    this.grid.update(this.c, this.scale)
     window.requestAnimationFrame(() => this.update())
   }
 }

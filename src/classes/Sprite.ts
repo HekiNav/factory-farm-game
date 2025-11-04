@@ -13,4 +13,7 @@ export class Sprite {
         // default, do nothing
         // draw functions declared in extended classes
     }
+    update(c: CanvasRenderingContext2D, scale: number) {
+        this.draw(c, scale)
+    }
 }

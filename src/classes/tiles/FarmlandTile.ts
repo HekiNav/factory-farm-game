@@ -1,24 +1,12 @@
-import { Tile } from "../Tile";
 import type { TextureSheet } from "../TileSheet";
+import { TextureTile } from "./TextureTile";
 
-export class FarmlandTile extends Tile{
-    textures: TextureSheet
+export class FarmlandTile extends TextureTile{
     constructor (x: number, y: number, size: number, textures: TextureSheet) {
-        super(x, y, size)
-        this.textures = textures
+        super(x, y, size, textures, "farmland")
     }
-    draw(c: CanvasRenderingContext2D, scale: number) {
-        c.drawImage(
-            this.textures.image,
-            //source position
-            ...this.textures.getTexture("farmland"),
-            this.width, 
-            this.height,
-            //draw position
-            this.x * scale, 
-            this.y * scale, 
-            this.width * scale, 
-            this.height * scale
-        )
+    update(c: CanvasRenderingContext2D, scale: number) {
+        console.log("farmland update")
+        this.draw(c, scale)
     }
 }
