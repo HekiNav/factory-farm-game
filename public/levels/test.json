@@ -1,11 +1,77 @@
 {
     "map": [
-        ["-","-","-","-","-","-","-","-","-","-"],
-        ["-","-","-","-","-","-","-","-","-","-"],
-        ["-","-","-","-","f","-","-","-","-","-"],
-        ["-","-","-","-","-","-","-","-","-","-"],
-        ["-","-","-","-","-","-","-","-","-","-"],
-        ["-","-","-","-","-","-","-","-","-","-"]
+        [
+            "gtl",
+            "gt",
+            "gt",
+            "gt",
+            "gt",
+            "gt",
+            "gt",
+            "gt",
+            "gt",
+            "gtr"
+        ],
+        [
+            "gl",
+            "g",
+            "g",
+            "g",
+            "g",
+            "g",
+            "g",
+            "g",
+            "g",
+            "gr"
+        ],
+        [
+            "gl",
+            "g",
+            "g",
+            "g",
+            "f",
+            "f",
+            "f",
+            "g",
+            "g",
+            "gr"
+        ],
+        [
+            "gl",
+            "g",
+            "g",
+            "g",
+            "f",
+            "f",
+            "f",
+            "g",
+            "g",
+            "gr"
+        ],
+        [
+            "gl",
+            "g",
+            "g",
+            "g",
+            "g",
+            "g",
+            "g",
+            "g",
+            "g",
+            "gr"
+        ],
+        [
+            "gbl",
+            "gb",
+            "gb",
+            "gb",
+            "gb",
+            "gb",
+            "gb",
+            "gb",
+            "gb",
+            "gbr"
+        ]
     ],
     "tiles": {
         "-": {
@@ -14,7 +80,72 @@
         "f": {
             "type": "farmland",
             "params": [
-                "{textures}"
+                "{textures}",
+                "{game}",
+                "{getRelativeTiles}"
+            ]
+        },
+        "g": {
+            "type": "texture",
+            "params": [
+                "{textures}",
+                "grass"
+            ]
+        },
+        "gt": {
+            "type": "texture",
+            "params": [
+                "{textures}",
+                "grass-t"
+            ]
+        },
+        "gtl": {
+            "type": "texture",
+            "params": [
+                "{textures}",
+                "grass-tl"
+            ]
+        },
+        "gl": {
+            "type": "texture",
+            "params": [
+                "{textures}",
+                "grass-l"
+            ]
+        },
+        "gbl": {
+            "type": "texture",
+            "params": [
+                "{textures}",
+                "grass-bl"
+            ]
+        },
+        "gb": {
+            "type": "texture",
+            "params": [
+                "{textures}",
+                "grass-b"
+            ]
+        },
+        "gbr": {
+            "type": "texture",
+            "params": [
+                "{textures}",
+                "grass-br"
+            ]
+        },
+        "gr": {
+            "type": "texture",
+            "params": [
+                "{textures}",
+                "grass-r"
+            ]
+        },
+        "gtr": {
+            "type": "texture",
+            "params": [
+                "{textures}",
+                "grass-tr"
             ]
         }
     }

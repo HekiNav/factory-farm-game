@@ -16,6 +16,9 @@ export class Sprite {
     update(c: CanvasRenderingContext2D, scale: number, _time: number) {
         this.draw(c, scale)
     }
+    get position() {
+        return {x: this.x, y: this.y, width: this.width, height: this.height}
+    }
 }
 export interface Location {
     x: number,

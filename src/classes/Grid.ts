@@ -1,3 +1,4 @@
+import type { Game } from "./Game.js";
 import { Tile } from "./Tile.js";
 import type { TextureSheet } from "./TileSheet.js";
 
@@ -22,7 +23,8 @@ export default class Grid {
     tileSize: number
     textures: TextureSheet
     #tiles: Record<string, any>
-    constructor(options: GridOptions, tiles: Record<string, any>, textures: TextureSheet) {
+    game: Game
+    constructor(options: GridOptions, tiles: Record<string, any>, textures: TextureSheet, game: Game) {
         const width = options.data.map[0].length
         const height = options.data.map.length
         this.#tiles = tiles
@@ -30,6 +32,7 @@ export default class Grid {
         this.yAmount = height
         this.tileSize = options.tileSize
         this.textures = textures
+        this.game = game
         this.gridData = this.#generateGrid(width, height, options.tileSize, options.data)
     }
     #generateGrid(width: number, height: number, tileSize: number, data: GridData): Array<Array<Tile>> {
@@ -67,6 +70,9 @@ export default class Grid {
     }
     get aspectRatio() {
         return this.xAmount / this.yAmount
+    }
+    getRelativeTiles() {
+        
     }
     update(c: CanvasRenderingContext2D, scale: number, time: number) {
         this.gridData.flat().forEach(tile => {

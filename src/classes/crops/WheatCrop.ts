@@ -3,6 +3,6 @@ import type { TextureSheet } from "../TileSheet";
 
 export class WheatCrop extends Crop {
     constructor(x: number, y: number, size: number, textures: TextureSheet) {
-        super(x, y, size, textures, "wheat")
+        super(x, y, size, textures, "wheat", 0.5, 6)
     }
 }

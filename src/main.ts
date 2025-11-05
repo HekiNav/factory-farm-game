@@ -4,13 +4,15 @@ import { FarmlandTile } from './classes/tiles/FarmlandTile'
 import { TextureSheet } from './classes/TileSheet'
 import { Game } from './classes/Game'
 import './style.css'
+import { TextureTile } from './classes/tiles/TextureTile'
 
 const BASE_URL = import.meta.env.BASE_URL
 
 const tiles = {
   "empty": EmptyTile,
   "color": ColorTile,
-  "farmland": FarmlandTile
+  "farmland": FarmlandTile,
+  "texture":TextureTile
 }
 
 async function getLevel(name: string) {
