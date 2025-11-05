@@ -13,7 +13,13 @@ export class Sprite {
         // default, do nothing
         // draw functions declared in extended classes
     }
-    update(c: CanvasRenderingContext2D, scale: number) {
+    update(c: CanvasRenderingContext2D, scale: number, _time: number) {
         this.draw(c, scale)
     }
+}
+export interface Location {
+    x: number,
+    y: number,
+    width: number,
+    height: number
 }

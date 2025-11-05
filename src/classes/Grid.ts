@@ -68,9 +68,9 @@ export default class Grid {
     get aspectRatio() {
         return this.xAmount / this.yAmount
     }
-    update(c: CanvasRenderingContext2D, scale: number) {
+    update(c: CanvasRenderingContext2D, scale: number, time: number) {
         this.gridData.flat().forEach(tile => {
-            tile.update(c, scale)
+            tile.update(c, scale, time)
         })
     }
 }

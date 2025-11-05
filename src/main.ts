@@ -27,17 +27,19 @@ Promise.all([getLevel("test"), getJson(BASE_URL + "sprites/index.json")]).then((
   textureImage.addEventListener("load", () => {
     console.log("LOADED TEXTURES")
 
-    const textureSheet = new TextureSheet(textureImage, tileData)
+    const tileSize = 16
+
+    const textureSheet = new TextureSheet(textureImage, tileData, tileSize)
 
     const game = new Game({
       grid: {
         data: levelData,
-        tileSize: 16
+        tileSize: tileSize
       },
       container: "#game",
       textures: textureSheet
     }, tiles)
-    game.update()
+    game.update(0)
   })
 
 })
