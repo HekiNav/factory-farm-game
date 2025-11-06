@@ -19,6 +19,9 @@ export class Sprite {
     get position() {
         return {x: this.x, y: this.y, width: this.width, height: this.height}
     }
+    get xy() {
+        return {x: this.x, y: this.y}
+    }
 }
 export interface Location {
     x: number,

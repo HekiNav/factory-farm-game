@@ -1,77 +1,11 @@
 {
     "map": [
-        [
-            "gtl",
-            "gt",
-            "gt",
-            "gt",
-            "gt",
-            "gt",
-            "gt",
-            "gt",
-            "gt",
-            "gtr"
-        ],
-        [
-            "gl",
-            "g",
-            "g",
-            "g",
-            "g",
-            "g",
-            "g",
-            "g",
-            "g",
-            "gr"
-        ],
-        [
-            "gl",
-            "g",
-            "g",
-            "g",
-            "f",
-            "f",
-            "f",
-            "g",
-            "g",
-            "gr"
-        ],
-        [
-            "gl",
-            "g",
-            "g",
-            "g",
-            "f",
-            "f",
-            "f",
-            "g",
-            "g",
-            "gr"
-        ],
-        [
-            "gl",
-            "g",
-            "g",
-            "g",
-            "g",
-            "g",
-            "g",
-            "g",
-            "g",
-            "gr"
-        ],
-        [
-            "gbl",
-            "gb",
-            "gb",
-            "gb",
-            "gb",
-            "gb",
-            "gb",
-            "gb",
-            "gb",
-            "gbr"
-        ]
+        ["gtl","gt","gt","gt","gt","gt","gt","gt","gt","gtr"],
+        ["gl","ga","ga","ga","ga","ga","ga","ga","ga","gr"],
+        ["gl","ga","ga","ga","f","f","f","ga","ga","gr"],
+        ["gl","ga","ga","ga","f","f","f","ga","ga","gr"],
+        ["gl","ga","ga","ga","ga","ga","ga","ga","ga","gr"],
+        ["gbl","gb","gb","gb","gb","gb","gb","gb","gb","gbr"]
     ],
     "tiles": {
         "-": {
@@ -81,8 +15,16 @@
             "type": "farmland",
             "params": [
                 "{textures}",
+                "{game}"
+            ]
+        },
+        "ga": {
+            "type": "buildable",
+            "params": [
+                "{textures}",
                 "{game}",
-                "{getRelativeTiles}"
+                "{grid}",
+                "grass"
             ]
         },
         "g": {

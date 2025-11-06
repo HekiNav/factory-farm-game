@@ -1,4 +1,6 @@
 import Grid, { type GridOptions } from './Grid';
+import type { Overlay } from './Overlay';
+import type { OverlayCollection } from './OverlayCollection';
 import type { Location } from './Sprite';
 import type { TextureSheet } from './TileSheet';
 
@@ -23,15 +25,19 @@ export class Game {
   #c: CanvasRenderingContext2D;
   #scale: number;
   #listeners: Array<GameEventListener>
-  constructor(options: GameOptions, tiles: Record<string, any>) {
+  #overlays: Array<OverlayCollection | Overlay>
+  #lastMousePosition: Record<string, number>
+  constructor(options: GameOptions) {
     this.#canvas = this.#generateCanvas(options.container);
     this.#c = this.#canvas.getContext("2d")!;
     this.#c.imageSmoothingEnabled = false;
     this.#scale = NaN;
     this.#listeners = []
+    this.#overlays = []
+    this.#lastMousePosition = {x: -1, y: -1}
     this.#initListeners()
 
-    this.#grid = new Grid(options.grid, tiles, options.textures, this);
+    this.#grid = new Grid(options.grid, options.textures, this);
 
     this.#resizeCanvas();
   }
@@ -39,17 +45,29 @@ export class Game {
     this.#canvas.addEventListener("mousemove", e => this.#handleMouseMove(e))
     this.#canvas.addEventListener("click", e => this.#handleClick(e))
   }
-  #handleMouseMove(_e: MouseEvent) {
+  #handleMouseMove(e: MouseEvent) {
+    const [canvasX, canvasY] = this.#toCanvasCoords(e.clientX, e.clientY)
+    const [prevCanvasX, prevCanvasY] = this.#toCanvasCoords(this.#lastMousePosition.x,this.#lastMousePosition.y)
 
+    this.#listeners.filter(l =>
+      l.type == GameEventType.MOUSEOVER &&
+      positionInBounds(canvasX, canvasY, l.position) &&
+      !positionInBounds(prevCanvasX, prevCanvasY, l.position)
+    ).forEach(l => l.callback())
+
+    this.#listeners.filter(l =>
+      l.type == GameEventType.MOUSELEAVE &&
+      !positionInBounds(canvasX, canvasY, l.position) &&
+      positionInBounds(prevCanvasX, prevCanvasY, l.position)
+    ).forEach(l => l.callback())
+
+    this.#lastMousePosition = { x: e.clientX, y: e.clientY }
   }
   #handleClick(e: MouseEvent) {
     const [canvasX, canvasY] = this.#toCanvasCoords(e.clientX, e.clientY)
-    this.#listeners.filter(l => 
-      l.type == GameEventType.CLICK && 
-      canvasX >= l.position.x &&
-      canvasX < l.position.x + l.position.width &&
-      canvasY >= l.position.y &&
-      canvasY < l.position.y + l.position.height
+    this.#listeners.filter(l =>
+      l.type == GameEventType.CLICK &&
+      positionInBounds(canvasX, canvasY, l.position)
     ).forEach(l => l.callback())
   }
   #toCanvasCoords(xPos: number, yPos: number) {
@@ -77,7 +95,11 @@ export class Game {
   update(time: number) {
     this.#c.clearRect(0, 0, this.#grid.width * this.#scale, this.#grid.height * this.#scale);
     this.#resizeCanvas();
+
     this.#grid.update(this.#c, this.#scale, time);
+
+    this.#overlays.forEach(o => o.draw(this.#c, this.#scale))
+
     window.requestAnimationFrame((t) => this.update(t));
   }
   on(type: GameEventType, pos: Location, cb: Function) {
@@ -87,4 +109,18 @@ export class Game {
       callback: cb
     })
   }
+  addOverlay(overlay: OverlayCollection | Overlay) {
+    this.#overlays.push(overlay)
+    return overlay.id
+  }
+  removeOverlay(overlayId: string) {
+    console.log(this.#overlays, overlayId)
+    this.#overlays = this.#overlays.filter(o => o.id != overlayId)
+  }
+}
+function positionInBounds(x: number, y: number, bounds: Location) {
+  return x >= bounds.x &&
+    x < bounds.x + bounds.width &&
+    y >= bounds.y &&
+    y < bounds.y + bounds.height
 }

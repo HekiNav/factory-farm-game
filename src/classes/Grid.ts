@@ -1,3 +1,4 @@
+import { tiles } from "../main.js";
 import type { Game } from "./Game.js";
 import { Tile } from "./Tile.js";
 import type { TextureSheet } from "./TileSheet.js";
@@ -15,6 +16,11 @@ export interface GridData {
     map: Array<Array<string>>,
     tiles: TileDefinition
 }
+export interface RelativePosition {
+    x: RelativeRange,
+    y: RelativeRange
+}
+type RelativeRange = [number, number] | number
 
 export default class Grid {
     gridData: Array<Array<Tile>>
@@ -24,7 +30,7 @@ export default class Grid {
     textures: TextureSheet
     #tiles: Record<string, any>
     game: Game
-    constructor(options: GridOptions, tiles: Record<string, any>, textures: TextureSheet, game: Game) {
+    constructor(options: GridOptions, textures: TextureSheet, game: Game) {
         const width = options.data.map[0].length
         const height = options.data.map.length
         this.#tiles = tiles
@@ -59,6 +65,7 @@ export default class Grid {
         }))
     }
     #getVar(name: string) {
+        if (name == "grid") return this
         const keyIndex = Object.keys(this).findIndex(k => k == name)
         return keyIndex > 0 ? Object.values(this)[keyIndex] : null;
     }
@@ -71,12 +78,30 @@ export default class Grid {
     get aspectRatio() {
         return this.xAmount / this.yAmount
     }
-    getRelativeTiles() {
-        
+    getRelativeTiles(pos: Record<string, number>, ...relative: RelativePosition[]): Array<Tile> {
+        const [originX, originY] = Object.values(pos).map(p => p / this.tileSize)
+        const tiles = new Array<Tile>()
+        relative.forEach(({ x, y }) => {
+            rangeFor(x, (xPos: number) => {
+                rangeFor(y, (yPos: number) => {
+                    tiles.push(this.gridData[originY + yPos][originX + xPos])
+                })
+            })
+        })
+        return tiles
     }
     update(c: CanvasRenderingContext2D, scale: number, time: number) {
         this.gridData.flat().forEach(tile => {
             tile.update(c, scale, time)
         })
+    }
+}
+export function rangeFor(range: RelativeRange, cb: Function) {
+    if (range instanceof Array) {
+        for (let i = range[0]; i < range[1] + 1; i++) {
+            cb(i)
+        }
+    } else {
+        cb(range)
     }
 }

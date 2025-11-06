@@ -23,17 +23,20 @@ export class Crop extends TextureTile {
             this.lastGrowTime = time
         }
         // fully grown check
-        if (this.growthState >= this.growthStateAmount - 1) return
+        if (this.fullyGrown) return
 
         const amountRandomTicks = Math.floor((time - this.lastGrowTime) / 1000)
         // every second, even if game runs at <1 fps (hopefully not)
         for (let i = 0; i < amountRandomTicks; i++) {
             if (Math.random() < this.growthChance) {
-                if (this.growthState >= this.growthStateAmount - 1) return
+                if (this.growthState >= this.growthStateAmount) return
                 this.growthState++
-                this.textureName = this.cropType + "-" + this.growthState
+                if (this.growthState < this.growthStateAmount) this.textureName = this.cropType + "-" + this.growthState
             }
             this.lastGrowTime = time
         }
+    }
+    get fullyGrown() {
+        return this.growthState >= this.growthStateAmount
     }
 }

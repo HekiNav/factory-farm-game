@@ -5,15 +5,26 @@ import { TextureSheet } from './classes/TileSheet'
 import { Game } from './classes/Game'
 import './style.css'
 import { TextureTile } from './classes/tiles/TextureTile'
+import { BuildableTile } from './classes/tiles/BuildableTile'
+import { HarvesterBuilding } from './classes/buildings/HarvesterBuilding'
+import { WheatCrop } from './classes/crops/WheatCrop'
 
 const BASE_URL = import.meta.env.BASE_URL
 
-const tiles = {
+export const tiles = {
   "empty": EmptyTile,
   "color": ColorTile,
   "farmland": FarmlandTile,
-  "texture":TextureTile
+  "texture": TextureTile,
+  "buildable": BuildableTile
 }
+export const crops = {
+  "wheat": WheatCrop
+}
+export const buildings = {
+  "harvester": HarvesterBuilding
+}
+
 
 async function getLevel(name: string) {
   return await getJson(BASE_URL + "levels/" + name + ".json")
@@ -40,7 +51,7 @@ Promise.all([getLevel("test"), getJson(BASE_URL + "sprites/index.json")]).then((
       },
       container: "#game",
       textures: textureSheet
-    }, tiles)
+    })
     game.update(0)
   })
 
