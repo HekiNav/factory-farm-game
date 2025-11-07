@@ -2,8 +2,8 @@
     "map": [
         ["gtl","gt","gt","gt","gt","gt","gt","gt","gt","gtr"],
         ["gl","ga","ga","ga","ga","ga","ga","ga","ga","gr"],
-        ["gl","ga","ga","ga","f","f","f","ga","ga","gr"],
-        ["gl","ga","ga","ga","f","f","f","ga","ga","gr"],
+        ["gl","f","f","f","ga","ga","ga","ga","ga","gr"],
+        ["gl","f","f","f","ga","ga","ga","ga","ga","gr"],
         ["gl","ga","ga","ga","ga","ga","ga","ga","ga","gr"],
         ["gbl","gb","gb","gb","gb","gb","gb","gb","gb","gbr"]
     ],

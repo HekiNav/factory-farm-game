@@ -1,4 +1,4 @@
-import { Tile } from "../Tile";
+import { Tile } from "../../bases/Tile";
 import type { TextureSheet } from "../TileSheet";
 
 export class TextureTile extends Tile{

@@ -1,4 +1,4 @@
-import type { Overlay } from "./Overlay";
+import type { Overlay } from "../bases/Overlay";
 
 export class OverlayCollection{
     #overlays: Array<Overlay>

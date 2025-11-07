@@ -1,8 +1,10 @@
 import Grid, { type GridOptions } from './Grid';
-import type { Overlay } from './Overlay';
+import type { Overlay } from '../bases/Overlay';
 import type { OverlayCollection } from './OverlayCollection';
-import type { Location } from './Sprite';
+import type { Location, Sprite } from './Sprite';
 import type { TextureSheet } from './TileSheet';
+import { Item } from '../bases/Item';
+import { isPositionInBounds } from './Utils';
 
 export interface GameOptions {
   grid: GridOptions,
@@ -25,8 +27,11 @@ export class Game {
   #c: CanvasRenderingContext2D;
   #scale: number;
   #listeners: Array<GameEventListener>
+  #items: Array<Item>
   #overlays: Array<OverlayCollection | Overlay>
   #lastMousePosition: Record<string, number>
+  #textures: TextureSheet
+  #drawAsOverlays: Array<Sprite>
   constructor(options: GameOptions) {
     this.#canvas = this.#generateCanvas(options.container);
     this.#c = this.#canvas.getContext("2d")!;
@@ -34,7 +39,10 @@ export class Game {
     this.#scale = NaN;
     this.#listeners = []
     this.#overlays = []
-    this.#lastMousePosition = {x: -1, y: -1}
+    this.#drawAsOverlays = []
+    this.#items = []
+    this.#textures = options.textures
+    this.#lastMousePosition = { x: -1, y: -1 }
     this.#initListeners()
 
     this.#grid = new Grid(options.grid, options.textures, this);
@@ -47,18 +55,18 @@ export class Game {
   }
   #handleMouseMove(e: MouseEvent) {
     const [canvasX, canvasY] = this.#toCanvasCoords(e.clientX, e.clientY)
-    const [prevCanvasX, prevCanvasY] = this.#toCanvasCoords(this.#lastMousePosition.x,this.#lastMousePosition.y)
+    const [prevCanvasX, prevCanvasY] = this.#toCanvasCoords(this.#lastMousePosition.x, this.#lastMousePosition.y)
 
     this.#listeners.filter(l =>
       l.type == GameEventType.MOUSEOVER &&
-      positionInBounds(canvasX, canvasY, l.position) &&
-      !positionInBounds(prevCanvasX, prevCanvasY, l.position)
+      isPositionInBounds(canvasX, canvasY, l.position) &&
+      !isPositionInBounds(prevCanvasX, prevCanvasY, l.position)
     ).forEach(l => l.callback())
 
     this.#listeners.filter(l =>
       l.type == GameEventType.MOUSELEAVE &&
-      !positionInBounds(canvasX, canvasY, l.position) &&
-      positionInBounds(prevCanvasX, prevCanvasY, l.position)
+      !isPositionInBounds(canvasX, canvasY, l.position) &&
+      isPositionInBounds(prevCanvasX, prevCanvasY, l.position)
     ).forEach(l => l.callback())
 
     this.#lastMousePosition = { x: e.clientX, y: e.clientY }
@@ -67,7 +75,7 @@ export class Game {
     const [canvasX, canvasY] = this.#toCanvasCoords(e.clientX, e.clientY)
     this.#listeners.filter(l =>
       l.type == GameEventType.CLICK &&
-      positionInBounds(canvasX, canvasY, l.position)
+      isPositionInBounds(canvasX, canvasY, l.position)
     ).forEach(l => l.callback())
   }
   #toCanvasCoords(xPos: number, yPos: number) {
@@ -98,6 +106,11 @@ export class Game {
 
     this.#grid.update(this.#c, this.#scale, time);
 
+    this.#items.forEach(i => i.draw(this.#c, this.#scale))
+    
+    this.#drawAsOverlays.forEach(s => s.draw(this.#c, this.#scale))
+    this.#drawAsOverlays = []
+
     this.#overlays.forEach(o => o.draw(this.#c, this.#scale))
 
     window.requestAnimationFrame((t) => this.update(t));
@@ -114,13 +127,18 @@ export class Game {
     return overlay.id
   }
   removeOverlay(overlayId: string) {
-    console.log(this.#overlays, overlayId)
     this.#overlays = this.#overlays.filter(o => o.id != overlayId)
   }
-}
-function positionInBounds(x: number, y: number, bounds: Location) {
-  return x >= bounds.x &&
-    x < bounds.x + bounds.width &&
-    y >= bounds.y &&
-    y < bounds.y + bounds.height
+  drawAsOverlay(sprite: Sprite) {
+    this.#drawAsOverlays.push(sprite)
+  }
+  addItem(x: number, y: number, type: string, creationTime: number) {
+    const item = new Item(x, y, this.#grid.tileSize, this.#textures, type, creationTime)
+    item.remove = () => this.removeItem(item.id)
+    this.#items.push(item)
+    return item
+  }
+  removeItem(itemId: string) {
+    this.#items = this.#items.filter(o => o.id != itemId)
+  }
 }

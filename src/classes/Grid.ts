@@ -1,6 +1,6 @@
 import { tiles } from "../main.js";
 import type { Game } from "./Game.js";
-import { Tile } from "./Tile.js";
+import { Tile } from "../bases/Tile.js";
 import type { TextureSheet } from "./TileSheet.js";
 
 export interface GridOptions {

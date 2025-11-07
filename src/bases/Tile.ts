@@ -1,4 +1,4 @@
-import { Sprite } from "./Sprite"
+import { Sprite } from "../classes/Sprite"
 
 export class Tile  extends Sprite{
     constructor(x: number, y: number, size: number) {

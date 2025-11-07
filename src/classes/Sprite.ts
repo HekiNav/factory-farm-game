@@ -17,10 +17,14 @@ export class Sprite {
         this.draw(c, scale)
     }
     get position() {
-        return {x: this.x, y: this.y, width: this.width, height: this.height}
+        return { x: this.x, y: this.y, width: this.width, height: this.height }
     }
     get xy() {
-        return {x: this.x, y: this.y}
+        return { x: this.x, y: this.y }
+    }
+    set xy(xy: Record<string, number>) {
+        this.x = xy.x
+        this.y = xy.y
     }
 }
 export interface Location {

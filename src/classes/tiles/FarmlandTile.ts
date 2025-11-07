@@ -1,5 +1,5 @@
 import { crops } from "../../main";
-import type { Crop } from "../Crop";
+import type { Crop } from "../../bases/Crop";
 import { GameEventType, type Game } from "../Game";
 import type { TextureSheet } from "../TileSheet";
 import { TextureTile } from "./TextureTile";
