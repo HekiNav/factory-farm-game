@@ -58,15 +58,15 @@ export class Game {
     const [prevCanvasX, prevCanvasY] = this.#toCanvasCoords(this.#lastMousePosition.x, this.#lastMousePosition.y)
 
     this.#listeners.filter(l =>
-      l.type == GameEventType.MOUSEOVER &&
-      isPositionInBounds(canvasX, canvasY, l.position) &&
-      !isPositionInBounds(prevCanvasX, prevCanvasY, l.position)
-    ).forEach(l => l.callback())
-
-    this.#listeners.filter(l =>
       l.type == GameEventType.MOUSELEAVE &&
       !isPositionInBounds(canvasX, canvasY, l.position) &&
       isPositionInBounds(prevCanvasX, prevCanvasY, l.position)
+    ).forEach(l => l.callback())
+    
+    this.#listeners.filter(l =>
+      l.type == GameEventType.MOUSEOVER &&
+      isPositionInBounds(canvasX, canvasY, l.position) &&
+      !isPositionInBounds(prevCanvasX, prevCanvasY, l.position)
     ).forEach(l => l.callback())
 
     this.#lastMousePosition = { x: e.clientX, y: e.clientY }
@@ -107,7 +107,7 @@ export class Game {
     this.#grid.update(this.#c, this.#scale, time);
 
     this.#items.forEach(i => i.draw(this.#c, this.#scale))
-    
+
     this.#drawAsOverlays.forEach(s => s.draw(this.#c, this.#scale))
     this.#drawAsOverlays = []
 
@@ -127,7 +127,7 @@ export class Game {
     return overlay.id
   }
   removeOverlay(overlayId: string) {
-    this.#overlays = this.#overlays.filter(o => o.id != overlayId)
+    this.#overlays.splice(this.#overlays.findIndex(o => o.id != overlayId), 1)
   }
   drawAsOverlay(sprite: Sprite) {
     this.#drawAsOverlays.push(sprite)

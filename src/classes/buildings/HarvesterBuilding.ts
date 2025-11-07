@@ -22,11 +22,11 @@ export class HarvesterBuilding extends Building {
         this.#grid = grid
         this.#pulledItems = []
         this.affectedPositions = { x: [-3, -1], y: [-1, 1] }
-        this.#game.on(GameEventType.MOUSEOVER, this.position, () => this.showOverlay)
-        this.#game.on(GameEventType.MOUSELEAVE, this.position, () => this.hideOverlay)
+        this.#game.on(GameEventType.MOUSEOVER, this.position, () => this.showOverlay())
+        this.#game.on(GameEventType.MOUSELEAVE, this.position, () => this.hideOverlay())
     }
     showOverlay() {
-        this.#overlay = this.#game.addOverlay(new OverlayCollection(...this.#getRelativeTiles().map(t => new OutlineOverlay(t))))
+        this.#overlay = this.#game.addOverlay(new OverlayCollection(...this.#getRelativeTiles().map(t => new OutlineOverlay(t,0.5))))
     }
     hideOverlay() {
         if (!this.#overlay) return
@@ -48,7 +48,6 @@ export class HarvesterBuilding extends Building {
         const pullTime = 2000 //ms
         this.#pulledItems.forEach(i => {
             const elapsedSinceCreation = time - i.creationTime!
-            console.log(elapsedSinceCreation)
             if (elapsedSinceCreation > pullTime) {
                 this.#pulledItems = this.#pulledItems.filter(item => item != i)
                 return
