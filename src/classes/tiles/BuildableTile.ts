@@ -5,6 +5,7 @@ import type Grid from "../Grid";
 import type { TextureSheet } from "../TileSheet";
 import { TextureTile } from "./TextureTile";
 import { OutlineOverlay } from "../overlays/OutlineOverlay";
+import type { Rotation } from "../Sprite";
 
 export class BuildableTile extends TextureTile {
     building?: Building
@@ -12,13 +13,13 @@ export class BuildableTile extends TextureTile {
     #grid: Grid
     #buildings: Record<string, any>
     #overlayId?: string
-    constructor(x: number, y: number, size: number, textures: TextureSheet, game: Game, grid: Grid, baseTileType: string) {
-        super(x, y, size, textures, baseTileType)
+    constructor(x: number, y: number, size: number, rotation: Rotation, textures: TextureSheet, game: Game, grid: Grid, baseTileType: string) {
+        super(x, y, size, rotation, textures, baseTileType)
         this.#game = game
         this.#grid = grid
         this.#buildings = buildings
         this.#game.on(GameEventType.CLICK, this.position, () => {
-            this.#game.openBuildMenu((type: string) => this.build(type), this)
+            this.#game.openBuildMenu((type: string, rotation: Rotation) => this.build(type, rotation), this)
         })
 
         this.#game.on(GameEventType.MOUSELEAVE, this.position, () => {
@@ -29,8 +30,8 @@ export class BuildableTile extends TextureTile {
             if (!this.#overlayId) this.#overlayId = this.#game.addOverlay(new OutlineOverlay(this))
         })
     }
-    build(buildingType: string) {
-        this.building = this.resolveBuilding(buildingType, this.x, this.y, this.width, this.textures, this.#game, this.#grid)
+    build(buildingType: string, rotation: Rotation) {
+        this.building = this.resolveBuilding(buildingType, this.x, this.y, this.width, rotation, this.textures, this.#game, this.#grid)
     }
     resolveBuilding(type: string, ...params: Array<any>) {
         if (!this.#buildings[type]) {

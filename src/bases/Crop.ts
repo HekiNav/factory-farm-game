@@ -1,3 +1,4 @@
+import type { Rotation } from "../classes/Sprite";
 import { TextureTile } from "../classes/tiles/TextureTile";
 import type { TextureSheet } from "../classes/TileSheet";
 
@@ -8,8 +9,8 @@ export class Crop extends TextureTile {
     growthStateAmount: number
     lastGrowTime: number
     cropType: string
-    constructor(x: number, y: number, size: number, textures: TextureSheet, cropType: string, growthChance: number, growthStateAmount: number) {
-        super(x, y, size, textures, cropType + "-0")
+    constructor(x: number, y: number, size: number, rotation: Rotation, textures: TextureSheet, cropType: string, growthChance: number, growthStateAmount: number) {
+        super(x, y, size, rotation, textures, cropType + "-0")
         this.growthState = 0
         this.lastGrowTime = 0
         this.growthChance = growthChance

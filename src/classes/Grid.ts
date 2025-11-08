@@ -3,6 +3,7 @@ import type { Game } from "./Game.js";
 import { Tile } from "../bases/Tile.js";
 import type { TextureSheet } from "./TileSheet.js";
 import type { XY } from "./Utils.js";
+import { ROTATION } from "./Sprite.js";
 
 export interface GridOptions {
     data: GridData
@@ -48,7 +49,7 @@ export default class Grid {
         for (let i = 0; i < height; i++) {
             tiles.push([])
             for (let j = 0; j < width; j++) {
-                tiles[i].push(this.#resolveTile(tileData[i][j].type, j * tileSize, i * tileSize, tileSize, ...(tileData[i][j].params || [])))
+                tiles[i].push(this.#resolveTile(tileData[i][j].type, j * tileSize, i * tileSize, tileSize, ROTATION.UP, ...(tileData[i][j].params || [])))
             }
         }
         return tiles
@@ -56,7 +57,7 @@ export default class Grid {
     #resolveTile(type: string, ...params: Array<any>) {
         if (!this.#tiles[type]) {
             console.warn(`Tile of type ${type} not found, using base Tile instead`)
-            return new Tile(params[0], params[1], params[2])
+            return new Tile(params[0], params[1], params[2], params[3])
         }
         const variableRegEx = /\{(.*)\}/
 
@@ -85,6 +86,7 @@ export default class Grid {
         relative.forEach(({ x, y }) => {
             rangeFor(x, (xPos: number) => {
                 rangeFor(y, (yPos: number) => {
+                    if (!this.gridData[originY + yPos]) return
                     tiles.push(this.gridData[originY + yPos][originX + xPos])
                 })
             })
@@ -99,9 +101,16 @@ export default class Grid {
 }
 export function rangeFor(range: RelativeRange, cb: Function) {
     if (range instanceof Array) {
-        for (let i = range[0]; i < range[1] + 1; i++) {
-            cb(i)
+        if (range[0] >= range[1]) {
+            for (let i = range[1]; i < range[0] + 1; i++) {
+                cb(i)
+            }
+        } else {
+            for (let i = range[0]; i < range[1] + 1; i++) {
+                cb(i)
+            }
         }
+
     } else {
         cb(range)
     }

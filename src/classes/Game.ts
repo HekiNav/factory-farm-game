@@ -1,12 +1,11 @@
 import Grid, { type GridOptions } from './Grid';
 import type { Overlay } from '../bases/Overlay';
 import type { OverlayCollection } from './OverlayCollection';
-import type { Sprite } from './Sprite';
+import { ROTATION, type Rotation, type Sprite } from './Sprite';
 import type { TextureSheet } from './TileSheet';
 import { Item } from '../bases/Item';
 import { isPositionInBounds, type XY, type Location } from './Utils';
 import { buildings } from '../main';
-import { OutlineOverlay } from './overlays/OutlineOverlay';
 import type { HarvesterBuilding } from './buildings/HarvesterBuilding';
 import type { BuildableTile } from './tiles/BuildableTile';
 
@@ -39,6 +38,7 @@ export class Game {
   #drawAsOverlays: Array<Sprite>
   #buildMenu: HTMLDivElement
   #tempBuilding?: HarvesterBuilding
+  #tempEventController: AbortController
 
   constructor(options: GameOptions) {
     this.#canvas = this.#generateCanvas(options.container);
@@ -47,6 +47,7 @@ export class Game {
     this.#c.imageSmoothingEnabled = false;
     this.#scale = NaN;
     this.#listeners = []
+    this.#tempEventController = new AbortController()
     this.#overlays = []
     this.#drawAsOverlays = []
     this.#items = []
@@ -146,7 +147,7 @@ export class Game {
     this.#drawAsOverlays.push(sprite)
   }
   addItem(x: number, y: number, type: string, creationTime: number) {
-    const item = new Item(x, y, this.#grid.tileSize, this.#textures, type, creationTime)
+    const item = new Item(x, y, this.#grid.tileSize, ROTATION.UP, this.#textures, type, creationTime)
     item.remove = () => this.removeItem(item.id)
     this.#items.push(item)
     return item
@@ -158,10 +159,28 @@ export class Game {
     return this.#items.filter(i => isPositionInBounds(i.center.x, i.center.y, pos))
   }
   openBuildMenu(buildFunction: Function, tile: BuildableTile) {
+    this.#closeBuildMenu()
+    this.#tempEventController = new AbortController()
     this.#buildMenu.hidden = false
     const template = this.#buildMenu.querySelector("#buildingMenuTemplate")
 
-    const overlayId = this.addOverlay(new OutlineOverlay(tile, 0.5))
+    let rotation: Rotation = { ...ROTATION.UP }
+
+    window.addEventListener("keydown", (e) => {
+      switch (e.key) {
+        case "r":
+          rotation.a = (rotation.a + 90) % 360
+          break;
+        case "R":
+          rotation.a = (rotation.a - 90) % 360
+          break;
+        default:
+          break;
+      }
+      if (this.#tempBuilding) {
+        this.#tempBuilding.setRotation(rotation)
+      }
+    }, { signal: this.#tempEventController.signal })
 
     Object.keys(buildings).forEach(b => {
 
@@ -178,12 +197,12 @@ export class Game {
       const name = item.querySelector(".buildingName")!
 
       item.addEventListener("click", () => {
-        buildFunction(b)
-        this.#closeBuildMenu(overlayId)
+        buildFunction(b, rotation)
+        this.#closeBuildMenu()
       })
       item.addEventListener("mouseenter", () => {
         if (this.#tempBuilding) this.#tempBuilding.hideOverlay()
-        this.#tempBuilding = tile.resolveBuilding(b, tile.x, tile.y, tile.width, this.#textures, this, this.#grid, false) // last false prevents temp building from creating events
+        this.#tempBuilding = tile.resolveBuilding(b, tile.x, tile.y, tile.width, rotation, this.#textures, this, this.#grid, false) // last false prevents temp building from creating events
       })
       item.addEventListener("mouseleave", () => {
         if (this.#tempBuilding) this.#tempBuilding.hideOverlay()
@@ -194,10 +213,10 @@ export class Game {
 
       this.#buildMenu.insertBefore(item, this.#buildMenu.firstChild)
     })
-    this.#buildMenu.querySelector("#cancelButton")?.addEventListener("click", () => this.#closeBuildMenu(overlayId), { once: true })
+    this.#buildMenu.querySelector("#cancelButton")?.addEventListener("click", () => this.#closeBuildMenu(), { once: true })
   }
-  #closeBuildMenu(overlayId: string) {
-    this.removeOverlay(overlayId)
+  #closeBuildMenu() {
+    this.#tempEventController.abort()
     this.#buildMenu.hidden = true
     this.#buildMenu.querySelectorAll(".removable").forEach(e => e.remove())
     if (this.#tempBuilding) this.#tempBuilding.hideOverlay()
