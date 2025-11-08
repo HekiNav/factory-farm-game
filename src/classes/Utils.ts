@@ -1,5 +1,3 @@
-import type { Location } from "./Sprite";
-
 export function isPositionInBounds(x: number, y: number, bounds: Location) {
     return x >= bounds.x &&
         x < bounds.x + bounds.width &&
@@ -16,3 +14,13 @@ export const range = (
     y2: number,
     a: number
 ) => lerp(x2, y2, invlerp(x1, y1, a));
+export interface Location {
+    x: number,
+    y: number,
+    width: number,
+    height: number
+}
+export interface XY {
+    x: number,
+    y: number
+}

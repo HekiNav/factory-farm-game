@@ -2,6 +2,7 @@ import { tiles } from "../main.js";
 import type { Game } from "./Game.js";
 import { Tile } from "../bases/Tile.js";
 import type { TextureSheet } from "./TileSheet.js";
+import type { XY } from "./Utils.js";
 
 export interface GridOptions {
     data: GridData
@@ -78,7 +79,7 @@ export default class Grid {
     get aspectRatio() {
         return this.xAmount / this.yAmount
     }
-    getRelativeTiles(pos: Record<string, number>, ...relative: RelativePosition[]): Array<Tile> {
+    getRelativeTiles(pos: XY, ...relative: RelativePosition[]): Array<Tile> {
         const [originX, originY] = Object.values(pos).map(p => p / this.tileSize)
         const tiles = new Array<Tile>()
         relative.forEach(({ x, y }) => {

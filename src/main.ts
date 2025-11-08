@@ -8,6 +8,7 @@ import { TextureTile } from './classes/tiles/TextureTile'
 import { BuildableTile } from './classes/tiles/BuildableTile'
 import { HarvesterBuilding } from './classes/buildings/HarvesterBuilding'
 import { WheatCrop } from './classes/crops/WheatCrop'
+import { ConveyorBuilding } from './classes/buildings/ConveyorBuilding'
 
 const BASE_URL = import.meta.env.BASE_URL
 
@@ -22,7 +23,8 @@ export const crops = {
   "wheat": WheatCrop
 }
 export const buildings = {
-  "harvester": HarvesterBuilding
+  "harvester": HarvesterBuilding,
+  "conveyor": ConveyorBuilding
 }
 
 
@@ -50,6 +52,7 @@ Promise.all([getLevel("test"), getJson(BASE_URL + "sprites/index.json")]).then((
         tileSize: tileSize
       },
       container: "#game",
+      buildMenu: "#buildMenu",
       textures: textureSheet
     })
     game.update(0)

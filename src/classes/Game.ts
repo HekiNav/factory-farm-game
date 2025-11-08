@@ -1,14 +1,19 @@
 import Grid, { type GridOptions } from './Grid';
 import type { Overlay } from '../bases/Overlay';
 import type { OverlayCollection } from './OverlayCollection';
-import type { Location, Sprite } from './Sprite';
+import type { Sprite } from './Sprite';
 import type { TextureSheet } from './TileSheet';
 import { Item } from '../bases/Item';
-import { isPositionInBounds } from './Utils';
+import { isPositionInBounds, type XY, type Location } from './Utils';
+import { buildings } from '../main';
+import { OutlineOverlay } from './overlays/OutlineOverlay';
+import type { HarvesterBuilding } from './buildings/HarvesterBuilding';
+import type { BuildableTile } from './tiles/BuildableTile';
 
 export interface GameOptions {
   grid: GridOptions,
   container: string,
+  buildMenu: string,
   textures: TextureSheet
 }
 export interface GameEventListener {
@@ -19,7 +24,7 @@ export interface GameEventListener {
 export enum GameEventType {
   MOUSEOVER,
   CLICK,
-  MOUSELEAVE,
+  MOUSELEAVE
 }
 export class Game {
   #grid: Grid;
@@ -29,11 +34,15 @@ export class Game {
   #listeners: Array<GameEventListener>
   #items: Array<Item>
   #overlays: Array<OverlayCollection | Overlay>
-  #lastMousePosition: Record<string, number>
+  #lastMousePosition: XY
   #textures: TextureSheet
   #drawAsOverlays: Array<Sprite>
+  #buildMenu: HTMLDivElement
+  #tempBuilding?: HarvesterBuilding
+
   constructor(options: GameOptions) {
     this.#canvas = this.#generateCanvas(options.container);
+    this.#buildMenu = document.querySelector(options.buildMenu) as HTMLDivElement
     this.#c = this.#canvas.getContext("2d")!;
     this.#c.imageSmoothingEnabled = false;
     this.#scale = NaN;
@@ -62,7 +71,7 @@ export class Game {
       !isPositionInBounds(canvasX, canvasY, l.position) &&
       isPositionInBounds(prevCanvasX, prevCanvasY, l.position)
     ).forEach(l => l.callback())
-    
+
     this.#listeners.filter(l =>
       l.type == GameEventType.MOUSEOVER &&
       isPositionInBounds(canvasX, canvasY, l.position) &&
@@ -113,6 +122,10 @@ export class Game {
 
     this.#overlays.forEach(o => o.draw(this.#c, this.#scale))
 
+    if (this.#tempBuilding) {
+      this.drawAsOverlay(this.#tempBuilding)
+      if (this.#tempBuilding) this.#tempBuilding.showOverlay()
+    }
     window.requestAnimationFrame((t) => this.update(t));
   }
   on(type: GameEventType, pos: Location, cb: Function) {
@@ -127,7 +140,7 @@ export class Game {
     return overlay.id
   }
   removeOverlay(overlayId: string) {
-    this.#overlays.splice(this.#overlays.findIndex(o => o.id != overlayId), 1)
+    this.#overlays.splice(this.#overlays.findIndex(o => o.id == overlayId), 1)
   }
   drawAsOverlay(sprite: Sprite) {
     this.#drawAsOverlays.push(sprite)
@@ -140,5 +153,55 @@ export class Game {
   }
   removeItem(itemId: string) {
     this.#items = this.#items.filter(o => o.id != itemId)
+  }
+  collidingItems(pos: Location): Array<Item> {
+    return this.#items.filter(i => isPositionInBounds(i.center.x, i.center.y, pos))
+  }
+  openBuildMenu(buildFunction: Function, tile: BuildableTile) {
+    this.#buildMenu.hidden = false
+    const template = this.#buildMenu.querySelector("#buildingMenuTemplate")
+
+    const overlayId = this.addOverlay(new OutlineOverlay(tile, 0.5))
+
+    Object.keys(buildings).forEach(b => {
+
+      const item = template?.cloneNode(true) as HTMLDivElement
+      item.hidden = false
+      item.removeAttribute("id")
+      item.classList.add("removable")
+
+      const texturePosition = this.#textures.getTexture(b)
+
+      item.style.setProperty("--image-position-x", (texturePosition[0] / this.#grid.tileSize).toString())
+      item.style.setProperty("--image-position-y", (texturePosition[1] / this.#grid.tileSize).toString())
+
+      const name = item.querySelector(".buildingName")!
+
+      item.addEventListener("click", () => {
+        buildFunction(b)
+        this.#closeBuildMenu(overlayId)
+      })
+      item.addEventListener("mouseenter", () => {
+        if (this.#tempBuilding) this.#tempBuilding.hideOverlay()
+        this.#tempBuilding = tile.resolveBuilding(b, tile.x, tile.y, tile.width, this.#textures, this, this.#grid, false) // last false prevents temp building from creating events
+      })
+      item.addEventListener("mouseleave", () => {
+        if (this.#tempBuilding) this.#tempBuilding.hideOverlay()
+        this.#tempBuilding = undefined
+      })
+
+      name.textContent = b
+
+      this.#buildMenu.insertBefore(item, this.#buildMenu.firstChild)
+    })
+    this.#buildMenu.querySelector("#cancelButton")?.addEventListener("click", () => this.#closeBuildMenu(overlayId), { once: true })
+  }
+  #closeBuildMenu(overlayId: string) {
+    this.removeOverlay(overlayId)
+    this.#buildMenu.hidden = true
+    this.#buildMenu.querySelectorAll(".removable").forEach(e => e.remove())
+    if (this.#tempBuilding) this.#tempBuilding.hideOverlay()
+    this.#tempBuilding = undefined
+    console.log(this.#overlays)
   }
 }

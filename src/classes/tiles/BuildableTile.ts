@@ -17,7 +17,9 @@ export class BuildableTile extends TextureTile {
         this.#game = game
         this.#grid = grid
         this.#buildings = buildings
-        this.#game.on(GameEventType.CLICK, this.position, () => this.build("harvester"))
+        this.#game.on(GameEventType.CLICK, this.position, () => {
+            this.#game.openBuildMenu((type: string) => this.build(type), this)
+        })
 
         this.#game.on(GameEventType.MOUSELEAVE, this.position, () => {
             this.#game.removeOverlay(this.#overlayId || "")
@@ -28,9 +30,9 @@ export class BuildableTile extends TextureTile {
         })
     }
     build(buildingType: string) {
-        this.building = this.#resolveBuilding(buildingType, this.x, this.y, this.width, this.textures, this.#game, this.#grid)
+        this.building = this.resolveBuilding(buildingType, this.x, this.y, this.width, this.textures, this.#game, this.#grid)
     }
-    #resolveBuilding(type: string, ...params: Array<any>) {
+    resolveBuilding(type: string, ...params: Array<any>) {
         if (!this.#buildings[type]) {
             console.warn(`Building of type ${type} not found, skipping building`)
             return null

@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Jersey+10&family=Pixelify+Sans:wght@400..700&display=swap');
+
 body {
   height: 100vh;
   width: 100vw;
   background-color: #008cbb;
   margin: 0;
+  overflow: hidden;
 }
 #game {
   display: flex;
@@ -13,4 +16,74 @@ body {
 }
 canvas {
   image-rendering: crisp-edges;
+}
+
+#buildMenu {
+  position: absolute;
+  top: 0;
+  width: 30%;
+  height: 100%;
+  background-color: #0003;
+  display: flex;
+  flex-direction: column;
+  padding: 1vw;
+  gap: 1vw;
+}
+#buildMenu.right{
+  right: 0;
+}
+.buildMenuItem {
+  font-family: "Jersey 10";
+  display: grid;
+  grid-template-areas: 
+  "img title title"
+  "img desc desc"
+  "img desc desc";
+  gap: 1vw;
+  height: 10vw;
+  color: white;
+  padding: 1vw;
+  --image-position-x: 3;
+  --image-position-y: 1;
+  border-radius: 1vw;
+  background-color: #0003;
+  transition: .3s ease-in-out;
+}
+.buildMenuItem:hover {
+  transform: scale(1.05);
+  background-color: #0006;
+}
+.buildingImage {
+  grid-area: img;
+  width: 10vw;
+  background-image: url(/sprites/tiles.png);
+  image-rendering: pixelated;
+  background-size: calc(100% * 10);
+  background-position: calc(-10vw * var(--image-position-x)) calc(-10vw * var(--image-position-y));
+  background-repeat: no-repeat;
+  height: 10vw;
+}
+.buildingName {
+  font-size: 3vw;
+  grid-area: title;
+}
+.buildingDesc {
+  grid-area: desc;
+}
+#cancelButton {
+  font-family: "Jersey 10";
+  padding: 1vw;
+  border-radius: 1vw;
+  background-color: #0003;
+  font-size: 2vw;
+  text-align: center;
+  color: white;
+  transition: .3s ease-in-out;
+}
+#cancelButton:hover{
+  transform: scale(1.05);
+  background-color: #0006;
+}
+*[hidden] {
+  display: none !important;
 }

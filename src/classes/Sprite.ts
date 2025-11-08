@@ -1,3 +1,5 @@
+import type { XY } from "./Utils"
+
 export class Sprite {
     x: number
     y: number
@@ -22,14 +24,15 @@ export class Sprite {
     get xy() {
         return { x: this.x, y: this.y }
     }
-    set xy(xy: Record<string, number>) {
+    set xy(xy: XY) {
         this.x = xy.x
         this.y = xy.y
     }
-}
-export interface Location {
-    x: number,
-    y: number,
-    width: number,
-    height: number
+    get center() {
+        return { x: this.x + this.width * 0.5, y: this.y + this.height * 0.5 }
+    }
+    set center(xy: XY) {
+        this.x = xy.x - this.width * 0.5
+        this.y = xy.y - this.height * 0.5
+    }
 }
