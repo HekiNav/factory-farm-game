@@ -4,7 +4,9 @@
             "wheat"
         ],
         "building": [
-            "trashcan"
+            "trashcan",
+            "separator",
+            "mill"
         ]
     },
     "requirements": {
