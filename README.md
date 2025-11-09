@@ -6,8 +6,10 @@ A modular grid-based factory/farming game made with vanilla TypeScript and HTML5
 - Modular levels, sprites and tiles
 - Building placement with rotation (took way too long :sob:)
 
+## Known bugs
+- Overlays sometimes stay even if their building is removed (only visual)
 ## Demo
-Github pages
+Github pages [here](https://hekinav.github.io/factory-farm-game)
 
 ## Running yourself
 
