@@ -19,6 +19,10 @@ export class ConveyorBuilding extends Building {
         this.game.on(GameEventType.MOUSEOVER, this.position, () => this.showOverlay())
         this.game.on(GameEventType.MOUSELEAVE, this.position, () => this.hideOverlay())
     }
+    removeEvents() {
+        this.game.off(GameEventType.MOUSEOVER, this.position, () => this.showOverlay())
+        this.game.off(GameEventType.MOUSELEAVE, this.position, () => this.hideOverlay())
+    }
     #getOutputPosition() {
         return rotateRelativePosition({ x: 0, y: 0 }, { x: 1, y: 0 }, this.rotation.a, this.width) as XY
     }
@@ -45,7 +49,6 @@ export class ConveyorBuilding extends Building {
         const collidingItems = this.game.collidingItems(this.position)
 
         collidingItems.forEach(i => {
-            console.log(this.#outputPosition)
             if (this.game.collidingItems({ ...this.#outputPosition, width: this.width, height: this.height }).length < 1) {
                 if (this.#outputPosition.y) {
                     i.y += this.#outputPosition.y

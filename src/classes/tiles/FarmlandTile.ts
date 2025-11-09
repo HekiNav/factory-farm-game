@@ -1,4 +1,4 @@
-import { crops } from "../../main";
+import { cropData, crops } from "../../main";
 import type { Crop } from "../../bases/Crop";
 import { GameEventType, type Game } from "../Game";
 import type { TextureSheet } from "../TileSheet";
@@ -12,7 +12,9 @@ export class FarmlandTile extends TextureTile {
     constructor(x: number, y: number, size: number, rotation: Rotation, textures: TextureSheet, game: Game) {
         super(x, y, size, rotation, textures, "farmland")
         this.#game = game
-        this.#game.on(GameEventType.CLICK, this.position, () => this.plant("wheat"))
+        this.#game.on(GameEventType.CLICK, this.position, () => {
+            this.#game.openMenu("plant", cropData, (type: string) => this.plant(type),this)
+        })
         this.#crops = crops
     }
     plant(cropType: string) {

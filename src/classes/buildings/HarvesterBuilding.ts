@@ -22,13 +22,15 @@ export class HarvesterBuilding extends Building {
 
         this.affectedPositions = this.#getAffectedPositions()
 
-        console.log(this.affectedPositions)
-
         this.#outputPosition = this.#getOutputPosition()
 
         if (!events) return
         this.game.on(GameEventType.MOUSEOVER, this.position, () => this.showOverlay())
         this.game.on(GameEventType.MOUSELEAVE, this.position, () => this.hideOverlay())
+    }
+    removeEvents() {
+        this.game.off(GameEventType.MOUSEOVER, this.position, () => this.showOverlay())
+        this.game.off(GameEventType.MOUSELEAVE, this.position, () => this.hideOverlay())
     }
     #getOutputPosition() {
         return rotateRelativePosition({x: 0, y: 0}, { x: 1, y: 0 }, this.rotation.a, this.width) as XY

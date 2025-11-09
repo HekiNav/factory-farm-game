@@ -1,6 +1,6 @@
 [
     ["farmland","wheat-0","wheat-1", "wheat-2",  "wheat-3","wheat-4","wheat-5","-","-","-"],
-    ["grass-tl","grass-t","grass-tr","harvester","conveyor","-","-","-","-","-"],
+    ["grass-tl","grass-t","grass-tr","harvester","conveyor","trashcan","-","-","-","-"],
     ["grass-l", "grass",  "grass-r", "wheat","-","-","-","-","-","-"],
     ["grass-bl","grass-b","grass-br","arrow","-","-","-","-","-","-"],
     ["-","-","-","-","-","-","-","-","-","-"],

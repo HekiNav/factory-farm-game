@@ -12,4 +12,13 @@ export class Building extends TextureTile {
         this.game = game
         this.grid = grid
     }
+    removeEvents() {
+        
+    }
+    showOverlay() {
+
+    }
+    hideOverlay() {
+            
+    }
 }

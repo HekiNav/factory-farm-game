@@ -5,14 +5,14 @@ import { ROTATION, type Rotation, type Sprite } from './Sprite';
 import type { TextureSheet } from './TileSheet';
 import { Item } from '../bases/Item';
 import { isPositionInBounds, type XY, type Location } from './Utils';
-import { buildings } from '../main';
 import type { HarvesterBuilding } from './buildings/HarvesterBuilding';
-import type { BuildableTile } from './tiles/BuildableTile';
+import { BuildableTile } from './tiles/BuildableTile';
+import type { FarmlandTile } from './tiles/FarmlandTile';
 
 export interface GameOptions {
   grid: GridOptions,
   container: string,
-  buildMenu: string,
+  menu: string,
   textures: TextureSheet
 }
 export interface GameEventListener {
@@ -36,13 +36,13 @@ export class Game {
   #lastMousePosition: XY
   #textures: TextureSheet
   #drawAsOverlays: Array<Sprite>
-  #buildMenu: HTMLDivElement
+  #menu: HTMLDivElement
   #tempBuilding?: HarvesterBuilding
   #tempEventController: AbortController
 
   constructor(options: GameOptions) {
     this.#canvas = this.#generateCanvas(options.container);
-    this.#buildMenu = document.querySelector(options.buildMenu) as HTMLDivElement
+    this.#menu = document.querySelector(options.menu) as HTMLDivElement
     this.#c = this.#canvas.getContext("2d")!;
     this.#c.imageSmoothingEnabled = false;
     this.#scale = NaN;
@@ -136,6 +136,13 @@ export class Game {
       callback: cb
     })
   }
+  off(type: GameEventType, pos: Location, cb: Function) {
+    this.#listeners.splice(this.#listeners.findIndex(l =>
+      l.type == type &&
+      l.position == pos &&
+      l.callback == cb
+    ), 1)
+  }
   addOverlay(overlay: OverlayCollection | Overlay) {
     this.#overlays.push(overlay)
     return overlay.id
@@ -158,11 +165,11 @@ export class Game {
   collidingItems(pos: Location): Array<Item> {
     return this.#items.filter(i => isPositionInBounds(i.center.x, i.center.y, pos))
   }
-  openBuildMenu(buildFunction: Function, tile: BuildableTile) {
-    this.#closeBuildMenu()
+  openMenu(type: string, dataList: any, buildFunction: Function, tile: BuildableTile | FarmlandTile) {
+    this.#closeMenu()
     this.#tempEventController = new AbortController()
-    this.#buildMenu.hidden = false
-    const template = this.#buildMenu.querySelector("#buildingMenuTemplate")
+    this.#menu.hidden = false
+    const template = this.#menu.querySelector("#buildingMenuTemplate")
 
     let rotation: Rotation = { ...ROTATION.UP }
 
@@ -174,6 +181,9 @@ export class Game {
         case "R":
           rotation.a = (rotation.a - 90) % 360
           break;
+        case "Escape":
+          this.#closeMenu()
+          break;
         default:
           break;
       }
@@ -182,7 +192,7 @@ export class Game {
       }
     }, { signal: this.#tempEventController.signal })
 
-    Object.keys(buildings).forEach(b => {
+    Object.keys(dataList).forEach(b => {
 
       const item = template?.cloneNode(true) as HTMLDivElement
       item.hidden = false
@@ -195,32 +205,49 @@ export class Game {
       item.style.setProperty("--image-position-y", (texturePosition[1] / this.#grid.tileSize).toString())
 
       const name = item.querySelector(".buildingName")!
+      const desc = item.querySelector(".buildingDesc")!
 
-      item.addEventListener("click", () => {
-        buildFunction(b, rotation)
-        this.#closeBuildMenu()
-      })
-      item.addEventListener("mouseenter", () => {
-        if (this.#tempBuilding) this.#tempBuilding.hideOverlay()
-        this.#tempBuilding = tile.resolveBuilding(b, tile.x, tile.y, tile.width, rotation, this.#textures, this, this.#grid, false) // last false prevents temp building from creating events
-      })
-      item.addEventListener("mouseleave", () => {
-        if (this.#tempBuilding) this.#tempBuilding.hideOverlay()
-        this.#tempBuilding = undefined
-      })
+      if (type == "build" && tile instanceof BuildableTile) {
+        item.addEventListener("click", () => {
+          buildFunction(b, rotation)
+          this.#closeMenu()
+        })
+        item.addEventListener("mouseenter", () => {
+          if (this.#tempBuilding) this.#tempBuilding.hideOverlay()
+          this.#tempBuilding = tile.resolveBuilding(b, tile.x, tile.y, tile.width, rotation, this.#textures, this, this.#grid, false) // last false prevents temp building from creating events
+        })
+        item.addEventListener("mouseleave", () => {
+          if (this.#tempBuilding) this.#tempBuilding.hideOverlay()
+          this.#tempBuilding = undefined
+        })
+      } else if (type == "building") {
+        const removeButton = this.#menu.querySelector("#cancelButton")?.cloneNode(true)! as HTMLDivElement
+        removeButton.textContent = "REMOVE"
+        removeButton.classList.add("removable")
+        removeButton.addEventListener("click", () => {
+          buildFunction()
+          this.#closeMenu()
+        })
+        this.#menu.insertBefore(removeButton, this.#menu.lastElementChild)
+      } else if (type == "plant") {
+        item.addEventListener("click", () => {
+          buildFunction(b)
+          this.#closeMenu()
+        })
+      }
 
-      name.textContent = b
+      name.textContent = dataList[b].title
+      desc.textContent = dataList[b].desc
 
-      this.#buildMenu.insertBefore(item, this.#buildMenu.firstChild)
+      this.#menu.insertBefore(item, this.#menu.firstChild)
     })
-    this.#buildMenu.querySelector("#cancelButton")?.addEventListener("click", () => this.#closeBuildMenu(), { once: true })
+    this.#menu.querySelector("#cancelButton")?.addEventListener("click", () => this.#closeMenu(), { once: true })
   }
-  #closeBuildMenu() {
+  #closeMenu() {
     this.#tempEventController.abort()
-    this.#buildMenu.hidden = true
-    this.#buildMenu.querySelectorAll(".removable").forEach(e => e.remove())
+    this.#menu.hidden = true
+    this.#menu.querySelectorAll(".removable").forEach(e => e.remove())
     if (this.#tempBuilding) this.#tempBuilding.hideOverlay()
     this.#tempBuilding = undefined
-    console.log(this.#overlays)
   }
 }

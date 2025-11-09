@@ -9,6 +9,7 @@ import { BuildableTile } from './classes/tiles/BuildableTile'
 import { HarvesterBuilding } from './classes/buildings/HarvesterBuilding'
 import { WheatCrop } from './classes/crops/WheatCrop'
 import { ConveyorBuilding } from './classes/buildings/ConveyorBuilding'
+import { TrashcanBuilding } from './classes/buildings/TrashcanBuilding'
 
 const BASE_URL = import.meta.env.BASE_URL
 
@@ -22,9 +23,34 @@ export const tiles = {
 export const crops = {
   "wheat": WheatCrop
 }
+export interface ObjectDetails {
+  title: string,
+  desc: string
+}
+export const cropData: Record<string, ObjectDetails> = {
+  "wheat": {
+    title:"Wheat",
+    desc:"Grows quickly",
+  }
+}
 export const buildings = {
   "harvester": HarvesterBuilding,
-  "conveyor": ConveyorBuilding
+  "conveyor": ConveyorBuilding,
+  "trashcan": TrashcanBuilding
+}
+export const buildingData: Record<string, ObjectDetails> = {
+  "harvester": {
+    title:"Harvester",
+    desc:"Collects crops from a 3x3 area",
+  },
+  "conveyor": {
+    title:"Conveyor belt",
+    desc:"Moves items around",
+  },
+  "trashcan": {
+    title:"Trash can",
+    desc:"Discards anything you throw at it",
+  }
 }
 
 
@@ -52,7 +78,7 @@ Promise.all([getLevel("test"), getJson(BASE_URL + "sprites/index.json")]).then((
         tileSize: tileSize
       },
       container: "#game",
-      buildMenu: "#buildMenu",
+      menu: "#buildMenu",
       textures: textureSheet
     })
     game.update(0)

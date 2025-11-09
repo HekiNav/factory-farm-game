@@ -1,4 +1,4 @@
-import { buildings } from "../../main";
+import { buildingData, buildings } from "../../main";
 import { Building } from "../../bases/Building";
 import { Game, GameEventType } from "../Game";
 import type Grid from "../Grid";
@@ -19,7 +19,13 @@ export class BuildableTile extends TextureTile {
         this.#grid = grid
         this.#buildings = buildings
         this.#game.on(GameEventType.CLICK, this.position, () => {
-            this.#game.openBuildMenu((type: string, rotation: Rotation) => this.build(type, rotation), this)
+            if (!this.building) this.#game.openMenu("build", buildingData, (type: string, rotation: Rotation) => this.build(type, rotation), this)
+            else {
+                this.#game.openMenu("building", { [this.building.textureName]: buildingData[this.building.textureName] }, () => {
+                    this.building?.removeEvents()
+                    this.building = undefined
+                }, this)
+            }
         })
 
         this.#game.on(GameEventType.MOUSELEAVE, this.position, () => {
