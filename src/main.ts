@@ -30,7 +30,11 @@ export interface ObjectDetails {
 export const cropData: Record<string, ObjectDetails> = {
   "wheat": {
     title:"Wheat",
-    desc:"Grows quickly",
+    desc:"Grows a bit faster than corn",
+  },
+  "corn": {
+    title:"Corn",
+    desc:"Its corn",
   }
 }
 export const buildings = {
