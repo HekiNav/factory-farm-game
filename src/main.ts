@@ -84,7 +84,7 @@ async function getJson(url: string) {
 
 Promise.all([getJson(BASE_URL + "sprites/index.json"), getLevel("level1"), getLevel("level2")]).then(([tileData, ...levels]) => {
   const textureImage = new Image()
-  textureImage.src = "/sprites/tiles.png"
+  textureImage.src = BASE_URL +"sprites/tiles.png"
   console.log("LOADING TEXTURES")
   textureImage.addEventListener("load", () => {
     console.log("LOADED TEXTURES")
