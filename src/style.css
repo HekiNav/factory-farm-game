@@ -28,6 +28,7 @@ canvas {
   flex-direction: column;
   padding: 1vw;
   gap: 1vw;
+  overflow: scroll;
 }
 #buildMenu.right{
   right: 0;
