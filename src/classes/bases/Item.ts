@@ -1,7 +1,7 @@
-import type { Rotation } from "../classes/Sprite";
-import { TextureTile } from "../classes/tiles/TextureTile";
-import type { TextureSheet } from "../classes/TileSheet";
-import type { XY } from "../classes/Utils";
+import type { Rotation } from "../Sprite";
+import { TextureTile } from "../tiles/TextureTile";
+import type { TextureSheet } from "../TileSheet";
+import type { XY } from "../Utils";
 
 export class Item extends TextureTile{
     remove: Function

@@ -1,4 +1,4 @@
-import { Tile } from "../../bases/Tile";
+import { Tile } from "../bases/Tile";
 import type { Rotation } from "../Sprite";
 import type { TextureSheet } from "../TileSheet";
 

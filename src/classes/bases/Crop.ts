@@ -1,6 +1,6 @@
-import type { Rotation } from "../classes/Sprite";
-import { TextureTile } from "../classes/tiles/TextureTile";
-import type { TextureSheet } from "../classes/TileSheet";
+import type { Rotation } from "../Sprite";
+import { TextureTile } from "../tiles/TextureTile";
+import type { TextureSheet } from "../TileSheet";
 
 export class Crop extends TextureTile {
     growthState: number

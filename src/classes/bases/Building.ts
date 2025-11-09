@@ -1,8 +1,8 @@
-import type { Game } from "../classes/Game";
-import type Grid from "../classes/Grid";
-import type { Rotation } from "../classes/Sprite";
-import { TextureTile } from "../classes/tiles/TextureTile";
-import type { TextureSheet } from "../classes/TileSheet";
+import type { Game } from "../Game";
+import type Grid from "../Grid";
+import type { Rotation } from "../Sprite";
+import { TextureTile } from "../tiles/TextureTile";
+import type { TextureSheet } from "../TileSheet";
 
 export class Building extends TextureTile {
     game: Game

@@ -1,4 +1,4 @@
-import { Crop } from "../../bases/Crop";
+import { Crop } from "../bases/Crop";
 import type { Rotation } from "../Sprite";
 import type { TextureSheet } from "../TileSheet";
 

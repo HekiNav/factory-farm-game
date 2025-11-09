@@ -1,9 +1,9 @@
 import Grid, { type GridOptions } from './Grid';
-import type { Overlay } from '../bases/Overlay';
+import type { Overlay } from './bases/Overlay';
 import type { OverlayCollection } from './OverlayCollection';
 import { ROTATION, type Rotation, type Sprite } from './Sprite';
 import type { TextureSheet } from './TileSheet';
-import { Item } from '../bases/Item';
+import { Item } from './bases/Item';
 import { isPositionInBounds, type XY, type Location } from './Utils';
 import type { HarvesterBuilding } from './buildings/HarvesterBuilding';
 import { BuildableTile } from './tiles/BuildableTile';

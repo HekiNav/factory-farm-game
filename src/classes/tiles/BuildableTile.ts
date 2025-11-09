@@ -1,5 +1,5 @@
 import { buildingData, buildings } from "../../main";
-import { Building } from "../../bases/Building";
+import { Building } from "../bases/Building";
 import { Game, GameEventType } from "../Game";
 import type Grid from "../Grid";
 import type { TextureSheet } from "../TileSheet";

@@ -1,5 +1,5 @@
-import { Overlay } from "../../bases/Overlay";
-import type { Tile } from "../../bases/Tile";
+import { Overlay } from "../bases/Overlay";
+import type { Tile } from "../bases/Tile";
 import type { TextureSheet } from "../TileSheet";
 
 export class TextureOverlay extends Overlay {

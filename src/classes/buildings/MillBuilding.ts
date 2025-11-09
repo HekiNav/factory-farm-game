@@ -1,4 +1,4 @@
-import { Building } from "../../bases/Building";
+import { Building } from "../bases/Building";
 import { GameEventType, type Game } from "../Game";
 import type Grid from "../Grid";
 import { OverlayCollection } from "../OverlayCollection";

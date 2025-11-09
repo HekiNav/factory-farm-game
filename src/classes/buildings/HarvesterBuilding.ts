@@ -1,13 +1,13 @@
-import { Building } from "../../bases/Building";
+import { Building } from "../bases/Building";
 import { GameEventType, type Game } from "../Game";
 import type { RelativePosition } from "../Grid";
 import type Grid from "../Grid";
 import { OverlayCollection } from "../OverlayCollection";
 import { OutlineOverlay } from "../overlays/OutlineOverlay";
-import { Tile } from "../../bases/Tile";
+import { Tile } from "../bases/Tile";
 import { FarmlandTile } from "../tiles/FarmlandTile";
 import type { TextureSheet } from "../TileSheet";
-import { Item } from "../../bases/Item";
+import { Item } from "../bases/Item";
 import { range, rotateRelativePosition, type XY } from "../Utils";
 import { ROTATION, type Rotation } from "../Sprite";
 

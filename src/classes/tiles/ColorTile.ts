@@ -1,4 +1,4 @@
-import { Tile } from "../../bases/Tile";
+import { Tile } from "../bases/Tile";
 import { ROTATION } from "../Sprite";
 
 export class ColorTile extends Tile{

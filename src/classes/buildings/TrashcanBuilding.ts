@@ -1,4 +1,4 @@
-import { Building } from "../../bases/Building";
+import { Building } from "../bases/Building";
 import { type Game } from "../Game";
 import type Grid from "../Grid";
 import type { Rotation } from "../Sprite";
