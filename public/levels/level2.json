@@ -4,16 +4,17 @@
         "building": []
     },
     "requirements": {
-        "corn": 100
+        "corn": 200,
+        "flour": 75
     },
     "instructions": [
-        "<div><h1>Good job!</h1> In the second level you have some new things: <ul><li>Wheat</li><li>Trash can</li><li>Separator</li><li>Mill</li></ul> You can use these to make flour. Wheat -> Separator -> Hay (trash) and Grains -> Mill -> Flour<br> Click to proceed"
+        "<div><h1>Good job!</h1> In the second level you have some new things: <ul><li>Wheat</li><li>Trash can</li><li>Separator</li><li>Mill</li></ul> You can use these to make flour. Wheat -> Separator -> Straw (trash) and Grains -> Mill -> Flour<br> Click to proceed"
     ],
     "map": [
         ["gtl","gt","gt","gt","gt","gt","gt","gt","gt","gt","gt","gt","gt","gt","gt","gtr"],
         ["gl","ga","ga","ga","ga","ga","ga","ga","ga","ga","ga","ga","ga","ga","ga","gr"],
         ["gl","f","f","f","ga","ga","ga","f","f","f","ga","ga","ga","ga","ga","gr"],
-        ["gl","f","f","f","ga","ga","ga","f","f","f","ga","ga","ga","ga","ga","gr"],
+        ["gl","f","f","f","ga","ga","ga","f","f","f","ga","ga","ga","ga","d","gr"],
         ["gl","f","f","f","ga","ga","ga","f","f","f","ga","ga","ga","ga","ga","gr"],
         ["gl","f","f","f","ga","ga","ga","f","f","f","ga","ga","ga","ga","ga","gr"],
         ["gl","f","f","f","ga","ga","ga","f","f","f","ga","ga","ga","ga","ga","gr"],

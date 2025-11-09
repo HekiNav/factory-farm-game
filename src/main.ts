@@ -13,6 +13,8 @@ import { CornCrop } from './classes/crops/CornCrop'
 import { DestinationTile } from './classes/tiles/DestinationTile'
 import { LevelController } from './classes/LevelController'
 import type { GridData } from './classes/Grid'
+import { SeparatorBuilding } from './classes/buildings/SeparatorBuilding'
+import { MillBuilding } from './classes/buildings/MillBuilding'
 
 const BASE_URL = import.meta.env.BASE_URL
 
@@ -45,7 +47,9 @@ export const cropData: Record<string, ObjectDetails> = {
 export const buildings = {
   "harvester": HarvesterBuilding,
   "conveyor": ConveyorBuilding,
-  "trashcan": TrashcanBuilding
+  "trashcan": TrashcanBuilding,
+  "separator": SeparatorBuilding,
+  "mill": MillBuilding
 }
 export const buildingData: Record<string, ObjectDetails> = {
   "harvester": {
@@ -59,6 +63,14 @@ export const buildingData: Record<string, ObjectDetails> = {
   "trashcan": {
     title: "Trash can",
     desc: "Discards anything you throw at it",
+  },
+  "separator": {
+    title: "Separator",
+    desc: "Separates grains from straw",
+  },
+  "mill": {
+    title: "Mill",
+    desc: "Grinds things, mostly grain",
   }
 }
 

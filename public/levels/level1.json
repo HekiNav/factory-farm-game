@@ -8,7 +8,7 @@
         ]
     },
     "requirements": {
-        "corn": 1
+        "corn": 0
     },
     "instructions": [
         "<div><h1>Welcome! Here are some instructions: </h1> Your goal is to deliver goods to the pallet. <h2>Planting</h2> <ol><li>Click a farmland tile</li><li>Select a crop</li></ol> <h2>Building</h2> <ol><li>Click a non-farmland tile</li><li>Hover over a building to preview it</li><li>Press (Shift)+R to rotate</li><li>Click a building to place it</li></ol><div><br> Click to proceed"

@@ -180,6 +180,11 @@ export class Game {
     this.#closeMenu()
     this.#tempEventController = new AbortController()
     this.#menu.hidden = false
+    if (tile.center.x < this.#grid.width * 0.5) {
+      this.#menu.classList.add("right")
+    } else {
+      this.#menu.classList.remove("right")
+    }
     const template = this.#menu.querySelector("#buildingMenuTemplate")
 
     let rotation: Rotation = { ...ROTATION.UP }
