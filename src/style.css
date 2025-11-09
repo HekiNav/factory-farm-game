@@ -84,6 +84,23 @@ canvas {
   transform: scale(1.05);
   background-color: #0006;
 }
+#overlay {
+  font-family: "Jersey 10";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #0006;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+}
+h1, h2 {
+  margin: 0;
+}
 *[hidden] {
   display: none !important;
 }

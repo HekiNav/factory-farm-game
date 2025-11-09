@@ -13,7 +13,8 @@ export interface GameOptions {
   grid: GridOptions,
   container: string,
   menu: string,
-  textures: TextureSheet
+  textures: TextureSheet,
+  onComplete: Function
 }
 export interface GameEventListener {
   type: GameEventType,
@@ -39,6 +40,8 @@ export class Game {
   #menu: HTMLDivElement
   #tempBuilding?: HarvesterBuilding
   #tempEventController: AbortController
+  #onComplete: Function
+  #ended: boolean
 
   constructor(options: GameOptions) {
     this.#canvas = this.#generateCanvas(options.container);
@@ -52,8 +55,11 @@ export class Game {
     this.#drawAsOverlays = []
     this.#items = []
     this.#textures = options.textures
+    this.#onComplete = options.onComplete
     this.#lastMousePosition = { x: -1, y: -1 }
     this.#initListeners()
+
+    this.#ended = false
 
     this.#grid = new Grid(options.grid, options.textures, this);
 
@@ -127,7 +133,7 @@ export class Game {
       this.drawAsOverlay(this.#tempBuilding)
       if (this.#tempBuilding) this.#tempBuilding.showOverlay()
     }
-    window.requestAnimationFrame((t) => this.update(t));
+    if (!this.#ended) window.requestAnimationFrame((t) => this.update(t));
   }
   on(type: GameEventType, pos: Location, cb: Function) {
     this.#listeners.push({
@@ -142,6 +148,11 @@ export class Game {
       l.position == pos &&
       l.callback == cb
     ), 1)
+  }
+  end() {
+    this.#canvas.remove()
+    this.#ended = true
+    this.#onComplete()
   }
   addOverlay(overlay: OverlayCollection | Overlay) {
     this.#overlays.push(overlay)

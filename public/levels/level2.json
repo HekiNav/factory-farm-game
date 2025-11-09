@@ -1,0 +1,117 @@
+{
+    "locked": {
+        "crop": [],
+        "building": []
+    },
+    "requirements": {
+        "corn": 100
+    },
+    "instructions": [
+        "<div><h1>Good job!</h1> In the second level you have some new things: <ul><li>Wheat</li><li>Trash can</li><li>Separator</li><li>Mill</li></ul> You can use these to make flour. Wheat -> Separator -> Hay (trash) and Grains -> Mill -> Flour<br> Click to proceed"
+    ],
+    "map": [
+        ["gtl","gt","gt","gt","gt","gt","gt","gt","gt","gt","gt","gt","gt","gt","gt","gtr"],
+        ["gl","ga","ga","ga","ga","ga","ga","ga","ga","ga","ga","ga","ga","ga","ga","gr"],
+        ["gl","f","f","f","ga","ga","ga","f","f","f","ga","ga","ga","ga","ga","gr"],
+        ["gl","f","f","f","ga","ga","ga","f","f","f","ga","ga","ga","ga","ga","gr"],
+        ["gl","f","f","f","ga","ga","ga","f","f","f","ga","ga","ga","ga","ga","gr"],
+        ["gl","f","f","f","ga","ga","ga","f","f","f","ga","ga","ga","ga","ga","gr"],
+        ["gl","f","f","f","ga","ga","ga","f","f","f","ga","ga","ga","ga","ga","gr"],
+        ["gl","f","f","f","ga","ga","ga","f","f","f","ga","ga","ga","ga","ga","gr"],
+        ["gbl","gb","gb","gb","gb","gb","gb","gb","gb","gb","gb","gb","gb","gb","gb","gbr"]
+    ],
+    "tiles": {
+        "-": {
+            "type": "empty"
+        },
+        "d": {
+            "type": "destination",
+            "params": [
+                "grass",
+                "{textures}",
+                "{game}",
+                "{grid}"
+            ]
+        },
+        "f": {
+            "type": "farmland",
+            "params": [
+                "{textures}",
+                "{game}",
+                "{grid}"
+            ]
+        },
+        "ga": {
+            "type": "buildable",
+            "params": [
+                "{textures}",
+                "{game}",
+                "{grid}",
+                "grass"
+            ]
+        },
+        "g": {
+            "type": "texture",
+            "params": [
+                "{textures}",
+                "grass"
+            ]
+        },
+        "gt": {
+            "type": "texture",
+            "params": [
+                "{textures}",
+                "grass-t"
+            ]
+        },
+        "gtl": {
+            "type": "texture",
+            "params": [
+                "{textures}",
+                "grass-tl"
+            ]
+        },
+        "gl": {
+            "type": "texture",
+            "params": [
+                "{textures}",
+                "grass-l"
+            ]
+        },
+        "gbl": {
+            "type": "texture",
+            "params": [
+                "{textures}",
+                "grass-bl"
+            ]
+        },
+        "gb": {
+            "type": "texture",
+            "params": [
+                "{textures}",
+                "grass-b"
+            ]
+        },
+        "gbr": {
+            "type": "texture",
+            "params": [
+                "{textures}",
+                "grass-br"
+            ]
+        },
+        "gr": {
+            "type": "texture",
+            "params": [
+                "{textures}",
+                "grass-r"
+            ]
+        },
+        "gtr": {
+            "type": "texture",
+            "params": [
+                "{textures}",
+                "grass-tr"
+            ]
+        }
+    }
+}

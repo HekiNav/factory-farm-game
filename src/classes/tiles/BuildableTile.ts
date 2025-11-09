@@ -12,14 +12,22 @@ export class BuildableTile extends TextureTile {
     #game: Game
     #grid: Grid
     #buildings: Record<string, any>
+    #buildingData: Record<string, any>
     #overlayId?: string
     constructor(x: number, y: number, size: number, rotation: Rotation, textures: TextureSheet, game: Game, grid: Grid, baseTileType: string) {
         super(x, y, size, rotation, textures, baseTileType)
         this.#game = game
         this.#grid = grid
-        this.#buildings = buildings
+        this.#buildings = {...buildings}
+        this.#buildingData = {...buildingData}
+        
+        this.#grid.locked.building.forEach(key => {
+            delete this.#buildings[key]
+            delete this.#buildingData[key]
+        })
+
         this.#game.on(GameEventType.CLICK, this.position, () => {
-            if (!this.building) this.#game.openMenu("build", buildingData, (type: string, rotation: Rotation) => this.build(type, rotation), this)
+            if (!this.building) this.#game.openMenu("build", this.#buildingData, (type: string, rotation: Rotation) => this.build(type, rotation), this)
             else {
                 this.#game.openMenu("building", { [this.building.textureName]: buildingData[this.building.textureName] }, () => {
                     this.building?.removeEvents()

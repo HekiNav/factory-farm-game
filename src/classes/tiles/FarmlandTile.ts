@@ -4,18 +4,29 @@ import { GameEventType, type Game } from "../Game";
 import type { TextureSheet } from "../TileSheet";
 import { TextureTile } from "./TextureTile";
 import { ROTATION, type Rotation } from "../Sprite";
+import type Grid from "../Grid";
 
 export class FarmlandTile extends TextureTile {
     crop?: Crop
     #game: Game
+    #grid: Grid
     #crops: Record<string, any>
-    constructor(x: number, y: number, size: number, rotation: Rotation, textures: TextureSheet, game: Game) {
+    #cropData: Record<string, any>
+    constructor(x: number, y: number, size: number, rotation: Rotation, textures: TextureSheet, game: Game, grid: Grid) {
         super(x, y, size, rotation, textures, "farmland")
         this.#game = game
-        this.#game.on(GameEventType.CLICK, this.position, () => {
-            this.#game.openMenu("plant", cropData, (type: string) => this.plant(type),this)
+        this.#grid = grid
+        this.#crops = {...crops}
+        this.#cropData = {...cropData}
+        
+        this.#grid.locked.crop.forEach(key => {
+            delete this.#crops[key]
+            delete this.#cropData[key]
         })
-        this.#crops = crops
+
+        this.#game.on(GameEventType.CLICK, this.position, () => {
+            this.#game.openMenu("plant", this.#cropData, (type: string) => this.plant(type),this)
+        })
     }
     plant(cropType: string) {
         this.crop = this.#resolveCrop(cropType, this.x, this.y, this.width, ROTATION.UP, this.textures)

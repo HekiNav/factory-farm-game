@@ -1,21 +1,45 @@
 {
+    "locked": {
+        "crop": [
+            "wheat"
+        ],
+        "building": [
+            "trashcan"
+        ]
+    },
+    "requirements": {
+        "corn": 1
+    },
+    "instructions": [
+        "<div><h1>Welcome! Here are some instructions: </h1> Your goal is to deliver goods to the pallet. <h2>Planting</h2> <ol><li>Click a farmland tile</li><li>Select a crop</li></ol> <h2>Building</h2> <ol><li>Click a non-farmland tile</li><li>Hover over a building to preview it</li><li>Press (Shift)+R to rotate</li><li>Click a building to place it</li></ol><div><br> Click to proceed"
+    ],
     "map": [
         ["gtl","gt","gt","gt","gt","gt","gt","gt","gt","gtr"],
         ["gl","ga","ga","ga","ga","ga","ga","ga","ga","gr"],
         ["gl","f","f","f","ga","ga","ga","ga","ga","gr"],
+        ["gl","f","f","f","ga","ga","ga","ga","d","gr"],
         ["gl","f","f","f","ga","ga","ga","ga","ga","gr"],
-        ["gl","ga","ga","ga","ga","ga","ga","ga","ga","gr"],
         ["gbl","gb","gb","gb","gb","gb","gb","gb","gb","gbr"]
     ],
     "tiles": {
         "-": {
             "type": "empty"
         },
+        "d": {
+            "type": "destination",
+            "params": [
+                "grass",
+                "{textures}",
+                "{game}",
+                "{grid}"
+            ]
+        },
         "f": {
             "type": "farmland",
             "params": [
                 "{textures}",
-                "{game}"
+                "{game}",
+                "{grid}"
             ]
         },
         "ga": {

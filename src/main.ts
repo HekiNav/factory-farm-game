@@ -2,7 +2,6 @@ import { ColorTile } from './classes/tiles/ColorTile'
 import { EmptyTile } from './classes/tiles/EmptyTile'
 import { FarmlandTile } from './classes/tiles/FarmlandTile'
 import { TextureSheet } from './classes/TileSheet'
-import { Game } from './classes/Game'
 import './style.css'
 import { TextureTile } from './classes/tiles/TextureTile'
 import { BuildableTile } from './classes/tiles/BuildableTile'
@@ -10,6 +9,10 @@ import { HarvesterBuilding } from './classes/buildings/HarvesterBuilding'
 import { WheatCrop } from './classes/crops/WheatCrop'
 import { ConveyorBuilding } from './classes/buildings/ConveyorBuilding'
 import { TrashcanBuilding } from './classes/buildings/TrashcanBuilding'
+import { CornCrop } from './classes/crops/CornCrop'
+import { DestinationTile } from './classes/tiles/DestinationTile'
+import { LevelController } from './classes/LevelController'
+import type { GridData } from './classes/Grid'
 
 const BASE_URL = import.meta.env.BASE_URL
 
@@ -18,10 +21,12 @@ export const tiles = {
   "color": ColorTile,
   "farmland": FarmlandTile,
   "texture": TextureTile,
-  "buildable": BuildableTile
+  "buildable": BuildableTile,
+  "destination": DestinationTile
 }
 export const crops = {
-  "wheat": WheatCrop
+  "wheat": WheatCrop,
+  "corn": CornCrop
 }
 export interface ObjectDetails {
   title: string,
@@ -29,12 +34,12 @@ export interface ObjectDetails {
 }
 export const cropData: Record<string, ObjectDetails> = {
   "wheat": {
-    title:"Wheat",
-    desc:"Grows a bit faster than corn",
+    title: "Wheat",
+    desc: "Grows a bit faster than corn but the grains need separating",
   },
   "corn": {
-    title:"Corn",
-    desc:"Its corn",
+    title: "Corn",
+    desc: "Its corn",
   }
 }
 export const buildings = {
@@ -44,16 +49,16 @@ export const buildings = {
 }
 export const buildingData: Record<string, ObjectDetails> = {
   "harvester": {
-    title:"Harvester",
-    desc:"Collects crops from a 3x3 area",
+    title: "Harvester",
+    desc: "Collects crops from a 3x3 area",
   },
   "conveyor": {
-    title:"Conveyor belt",
-    desc:"Moves items around",
+    title: "Conveyor belt",
+    desc: "Moves items around",
   },
   "trashcan": {
-    title:"Trash can",
-    desc:"Discards anything you throw at it",
+    title: "Trash can",
+    desc: "Discards anything you throw at it",
   }
 }
 
@@ -65,7 +70,7 @@ async function getJson(url: string) {
   return await (await fetch(url)).json()
 }
 
-Promise.all([getLevel("test"), getJson(BASE_URL + "sprites/index.json")]).then(([levelData, tileData]) => {
+Promise.all([getJson(BASE_URL + "sprites/index.json"), getLevel("level1"), getLevel("level2")]).then(([tileData, ...levels]) => {
   const textureImage = new Image()
   textureImage.src = "/sprites/tiles.png"
   console.log("LOADING TEXTURES")
@@ -76,16 +81,7 @@ Promise.all([getLevel("test"), getJson(BASE_URL + "sprites/index.json")]).then((
 
     const textureSheet = new TextureSheet(textureImage, tileData, tileSize)
 
-    const game = new Game({
-      grid: {
-        data: levelData,
-        tileSize: tileSize
-      },
-      container: "#game",
-      menu: "#buildMenu",
-      textures: textureSheet
-    })
-    game.update(0)
+    new LevelController(textureSheet, "#buildMenu", "#game", tileSize, "#overlay", ...levels as GridData[])
   })
 
 })

@@ -16,7 +16,13 @@ export interface TileDefinitionData {
 }
 export interface GridData {
     map: Array<Array<string>>,
-    tiles: TileDefinition
+    tiles: TileDefinition,
+    locked: {
+        crop: Array<string>,
+        building: Array<string>
+    },
+    requirements: Record<string,number>
+    instructions: Array<string>
 }
 export interface RelativePosition {
     x: RelativeRange,
@@ -32,6 +38,11 @@ export default class Grid {
     textures: TextureSheet
     #tiles: Record<string, any>
     game: Game
+    locked: {
+        crop: Array<string>,
+        building: Array<string>
+    }
+    requirements: Record<string, number>
     constructor(options: GridOptions, textures: TextureSheet, game: Game) {
         const width = options.data.map[0].length
         const height = options.data.map.length
@@ -41,6 +52,8 @@ export default class Grid {
         this.tileSize = options.tileSize
         this.textures = textures
         this.game = game
+        this.locked = options.data.locked
+        this.requirements = options.data.requirements
         this.gridData = this.#generateGrid(width, height, options.tileSize, options.data)
     }
     #generateGrid(width: number, height: number, tileSize: number, data: GridData): Array<Array<Tile>> {
