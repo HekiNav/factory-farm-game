@@ -70,7 +70,7 @@ export const buildingData: Record<string, ObjectDetails> = {
   },
   "mill": {
     title: "Mill",
-    desc: "Grinds things, mostly grain",
+    desc: "Grinds things, mostly grain. Destroys non-grain items.",
   }
 }
 
