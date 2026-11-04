@@ -1,9 +1,9 @@
 [
     ["farmland","wheat-0","wheat-1", "wheat-2",  "wheat-3","wheat-4","wheat-5","corn-0","corn-1","corn-2"],
     ["grass-tl","grass-t","grass-tr","harvester","conveyor","trashcan","pallet","corn-3","corn-4","corn-5"],
-    ["grass-l", "grass",  "grass-r", "wheat","corn","straw","grain","flour","-","-"],
-    ["grass-bl","grass-b","grass-br","arrow","separator","mill","-","-","-","-"],
-    ["-","-","-","-","-","-","-","-","-","-"],
+    ["grass-l", "grass",  "grass-r", "wheat","corn","straw","grain","flour","pumpkin","pumpkin-pieces"],
+    ["grass-bl","grass-b","grass-br","arrow","separator","mill","pumpkin-0","pumpkin-1","pumpkin-2","pumpkin-3"],
+    ["pumpkin-soup","bread","carved-pumpkin-a","carved-pumpkin-b","carved-pumpkin-c","oven","-","-","pumpkin-5","pumpkin-4"],
     ["-","-","-","-","-","-","-","-","-","-"],
     ["-","-","-","-","-","-","-","-","-","-"],
     ["-","-","-","-","-","-","-","-","-","-"],

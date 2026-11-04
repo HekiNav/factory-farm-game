@@ -1,4 +1,3 @@
-import { buildingData, buildings } from "../../main";
 import { Building } from "../bases/Building";
 import { Game, GameEventType } from "../Game";
 import type Grid from "../Grid";
@@ -6,6 +5,7 @@ import type { TextureSheet } from "../TileSheet";
 import { TextureTile } from "./TextureTile";
 import { OutlineOverlay } from "../overlays/OutlineOverlay";
 import type { Rotation } from "../Sprite";
+import { buildingData, buildings } from "../../BuildingDefs";
 
 export class BuildableTile extends TextureTile {
     building?: Building

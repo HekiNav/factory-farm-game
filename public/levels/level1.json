@@ -1,7 +1,8 @@
 {
     "locked": {
         "crop": [
-            "wheat"
+            "wheat",
+            "pumpkin"
         ],
         "building": [
             "trashcan",

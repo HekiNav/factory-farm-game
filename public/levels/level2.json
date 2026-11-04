@@ -1,6 +1,8 @@
 {
     "locked": {
-        "crop": [],
+        "crop": [
+            "pumpkin"
+        ],
         "building": []
     },
     "requirements": {

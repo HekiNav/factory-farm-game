@@ -10,7 +10,8 @@ export class Crop extends TextureTile {
     lastGrowTime: number
     cropType: string
     constructor(x: number, y: number, size: number, rotation: Rotation, textures: TextureSheet, cropType: string, growthChance: number, growthStateAmount: number) {
-        super(x, y, size, rotation, textures, cropType + "-0")
+        // apply random rotation
+        super(x, y, size, {...rotation, a: rotation.a + 90 * Math.floor(Math.random()*4)}, textures, cropType + "-0")
         this.growthState = 0
         this.lastGrowTime = 0
         this.growthChance = growthChance

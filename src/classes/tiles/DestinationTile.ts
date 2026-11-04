@@ -19,7 +19,7 @@ export class DestinationTile extends TextureTile {
         this.#reqTiles = []
         this.#requirements = this.#grid.requirements
         this.#requirementsFulfilled = Object.keys(this.#requirements).reduce((prev, curr, i) => {
-            this.#reqTiles.push(new TextureTile(x - size * 0.25, y + i * size * 0.5, size * 0.5, ROTATION.UP, textures, curr, size))
+            this.#reqTiles.push(new TextureTile(x - size * 0.2 + Math.floor(i / 3) * size * 0.6, y + (i % 3) * size * 0.3, size * 0.35, ROTATION.UP, textures, curr, size))
             return { ...prev, [curr]: 0 }
         }, {})
     }
@@ -29,10 +29,10 @@ export class DestinationTile extends TextureTile {
     drawRequirements(c: CanvasRenderingContext2D, scale: number) {
         this.#reqTiles.forEach(t => {
             this.#game.drawAsOverlay(t)
-            const fontSize = t.height * scale * 0.6
+            const fontSize = t.height * scale * 0.5
             c.font = `${fontSize}px "Jersey 10"`
             c.fillStyle = "#4C3C1E"
-            c.fillText(`${this.#requirementsFulfilled[t.textureName]}/${this.#requirements[t.textureName]}`, (t.x + t.width) * scale, (t.y + t.height * 0.5) * scale + fontSize * 0.25)
+            c.fillText(`${this.#requirementsFulfilled[t.textureName]}/${this.#requirements[t.textureName]}`, (t.x + t.width) * scale, (t.y + t.height * 0.5) * scale + fontSize * 0.4)
         })
     }
     update(c: CanvasRenderingContext2D, scale: number, time: number) {

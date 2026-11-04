@@ -23,10 +23,10 @@ export class TextureTile extends Tile {
             this.spriteSize || this.width,
             this.spriteSize || this.width,
             //draw position
-            this.width * this.rotation.x * -0.5 * scale,
-            this.height * this.rotation.y * -0.5 * scale,
-            this.width * this.rotation.x * scale,
-            this.height * this.rotation.y * scale
+            Math.round(this.width * this.rotation.x * -0.5 * scale),
+            Math.round(this.height * this.rotation.y * -0.5 * scale),
+            Math.floor(this.width * this.rotation.x * scale),
+            Math.floor(this.height * this.rotation.y * scale)
         )
         c.restore()
     }

@@ -66,7 +66,13 @@ export class SeparatorBuilding extends Building {
                 this.game.addItem(this.x, this.y, "grain", time)
                 return
             }
-            const outputPosition = this.#outputPositions[i.textureName == "straw" ? 1 : 0]
+            if (i.textureName == "pumpkin") {
+                this.game.removeItem(i.id)
+                this.game.addItem(this.x, this.y, "carved-pumpkin", time, ["a", "b", "c"])
+                this.game.addItem(this.x, this.y, "pumpkin-pieces", time)
+                return
+            }
+            const outputPosition = this.#outputPositions[(i.textureName == "straw" || i.textureName == "pumpkin-pieces") ? 1 : 0]
             if (this.game.collidingItems({ ...outputPosition, width: this.width, height: this.height }).length < 1) {
                 if (outputPosition.y) {
                     i.y += outputPosition.y * 0.5

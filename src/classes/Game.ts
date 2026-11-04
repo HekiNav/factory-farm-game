@@ -164,8 +164,8 @@ export class Game {
   drawAsOverlay(sprite: Sprite) {
     this.#drawAsOverlays.push(sprite)
   }
-  addItem(x: number, y: number, type: string, creationTime: number) {
-    const item = new Item(x, y, this.#grid.tileSize, ROTATION.UP, this.#textures, type, creationTime)
+  addItem(x: number, y: number, type: string, creationTime: number, variations: string[] = []) {
+    const item = new Item(x, y, this.#grid.tileSize, ROTATION.UP, this.#textures, type, creationTime, variations)
     item.remove = () => this.removeItem(item.id)
     this.#items.push(item)
     return item

@@ -1,10 +1,10 @@
-import { cropData, crops } from "../../main";
 import type { Crop } from "../bases/Crop";
 import { GameEventType, type Game } from "../Game";
 import type { TextureSheet } from "../TileSheet";
 import { TextureTile } from "./TextureTile";
 import { ROTATION, type Rotation } from "../Sprite";
 import type Grid from "../Grid";
+import { cropData, crops } from "../../CropTileDefs";
 
 export class FarmlandTile extends TextureTile {
     crop?: Crop

@@ -21,7 +21,7 @@ canvas {
 #buildMenu {
   position: absolute;
   top: 0;
-  width: 30%;
+  width: 20%;
   height: 100%;
   background-color: #0003;
   display: flex;
@@ -41,7 +41,7 @@ canvas {
   "img desc desc"
   "img desc desc";
   gap: 1vw;
-  height: 10vw;
+  height: 7em;
   color: white;
   padding: 1vw;
   --image-position-x: 3;
@@ -56,16 +56,16 @@ canvas {
 }
 .buildingImage {
   grid-area: img;
-  width: 10vw;
+  width: 7em;
+  height: 7em;
   background-image: url(/sprites/tiles.png);
   image-rendering: pixelated;
   background-size: calc(100% * 10);
-  background-position: calc(-10vw * var(--image-position-x)) calc(-10vw * var(--image-position-y));
+  background-position: calc(-7em * var(--image-position-x)) calc(-7em * var(--image-position-y));
   background-repeat: no-repeat;
-  height: 10vw;
 }
 .buildingName {
-  font-size: 3vw;
+  font-size: 2em;
   grid-area: title;
 }
 .buildingDesc {
