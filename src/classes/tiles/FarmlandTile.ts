@@ -5,6 +5,7 @@ import { TextureTile } from "./TextureTile";
 import { ROTATION, type Rotation } from "../Sprite";
 import type Grid from "../Grid";
 import { cropData, crops } from "../../CropTileDefs";
+import { OutlineOverlay } from "../overlays/OutlineOverlay";
 
 export class FarmlandTile extends TextureTile {
     crop?: Crop
@@ -12,20 +13,29 @@ export class FarmlandTile extends TextureTile {
     #grid: Grid
     #crops: Record<string, any>
     #cropData: Record<string, any>
+    #overlayId?: string
     constructor(x: number, y: number, size: number, rotation: Rotation, textures: TextureSheet, game: Game, grid: Grid) {
         super(x, y, size, rotation, textures, "farmland")
         this.#game = game
         this.#grid = grid
-        this.#crops = {...crops}
-        this.#cropData = {...cropData}
-        
+        this.#crops = { ...crops }
+        this.#cropData = { ...cropData }
+
         this.#grid.locked.crop.forEach(key => {
             delete this.#crops[key]
             delete this.#cropData[key]
         })
 
         this.#game.on(GameEventType.CLICK, this.position, () => {
-            this.#game.openMenu("plant", this.#cropData, (type: string) => this.plant(type),this)
+            this.#game.openMenu("plant", this.#cropData, (type: string) => this.plant(type), this, false)
+        })
+
+        this.#game.on(GameEventType.DESELECT, this.position, () => {
+            this.#game.removeOverlay(this.#overlayId || "")
+            this.#overlayId = undefined
+        })
+        this.#game.on(GameEventType.SELECT, this.position, () => {
+            if (!this.#overlayId) this.#overlayId = this.#game.addOverlay(new OutlineOverlay(this))
         })
     }
     plant(cropType: string) {

@@ -6,6 +6,31 @@ export function isPositionInBounds(x: number, y: number, bounds: Location) {
         y >= bounds.y &&
         y < bounds.y + bounds.height
 }
+
+export function isRectOverlapping(rect1: Location, rect2: Location) {
+    return (
+        rect1.x < rect2.x + rect2.width &&
+        rect1.x + rect1.width > rect2.x &&
+        rect1.y < rect2.y + rect2.height &&
+        rect1.y + rect1.height > rect2.y
+    )
+}
+
+export function isRectContained(rect1: Location, rect2: Location) {
+    return (
+        rect2.x >= rect1.x &&
+        rect2.y >= rect1.y &&
+        rect2.x + rect2.width <= rect1.x + rect1.width &&
+        rect2.y + rect2.height <= rect1.y + rect1.height
+    )
+}
+
+export function isRectInBounds(rect: Location, bounds: Location) {
+    return isRectOverlapping(rect, bounds) || isRectContained(bounds, rect)
+}
+
+
+
 export const lerp = (x: number, y: number, a: number) => x * (1 - a) + y * a;
 export const invlerp = (x: number, y: number, a: number) => clamp((a - x) / (y - x));
 export const clamp = (a: number, min = 0, max = 1) => Math.min(max, Math.max(min, a));
@@ -43,8 +68,8 @@ export function rotateRelativePosition(center: XY, relative: RelativePosition, a
     const centerPos = { x: center.x + half, y: center.y + half }
     if (!(relative.x instanceof Array)) {
         const pos = relative as XY
-        const rotatedPos = rotatePoint(centerPos, {x: pos.x + half, y: pos.y + half}, angle)
-        return {x: Math.floor(rotatedPos.x - half), y: Math.floor(rotatedPos.y - half)}
+        const rotatedPos = rotatePoint(centerPos, { x: pos.x + half, y: pos.y + half }, angle)
+        return { x: Math.floor(rotatedPos.x - half), y: Math.floor(rotatedPos.y - half) }
     }
     let newRelative: RelativeArrayPosition = { x: [0, 0], y: [0, 0] };
 

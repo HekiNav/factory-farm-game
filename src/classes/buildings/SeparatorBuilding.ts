@@ -18,12 +18,12 @@ export class SeparatorBuilding extends Building {
         this.#inputPosition = this.#getInputPosition()
 
         if (!events) return
-        this.game.on(GameEventType.MOUSEOVER, this.position, () => this.showOverlay())
-        this.game.on(GameEventType.MOUSELEAVE, this.position, () => this.hideOverlay())
+        this.game.on(GameEventType.HOVER, this.position, () => this.showOverlay())
+        this.game.on(GameEventType.DEHOVER, this.position, () => this.hideOverlay())
     }
     removeEvents() {
-        this.game.off(GameEventType.MOUSEOVER, this.position, () => this.showOverlay())
-        this.game.off(GameEventType.MOUSELEAVE, this.position, () => this.hideOverlay())
+        this.game.off(GameEventType.HOVER, this.position, () => this.showOverlay())
+        this.game.off(GameEventType.DEHOVER, this.position, () => this.hideOverlay())
     }
     #getOutputPositions() {
         return [rotateRelativePosition({ x: 0, y: 0 }, { x: 1, y: 0 }, this.rotation.a, this.width) as XY, rotateRelativePosition({ x: 0, y: 0 }, { x: 0, y: -1 }, this.rotation.a, this.width) as XY]

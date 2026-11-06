@@ -27,20 +27,21 @@ export class BuildableTile extends TextureTile {
         })
 
         this.#game.on(GameEventType.CLICK, this.position, () => {
-            if (!this.building) this.#game.openMenu("build", this.#buildingData, (type: string, rotation: Rotation) => this.build(type, rotation), this)
+            console.log("ETYHEHE")
+            if (!this.building) this.#game.openMenu("build", this.#buildingData, (type: string, rotation: Rotation) => this.build(type, rotation), this, false)
             else {
                 this.#game.openMenu("building", { [this.building.textureName]: buildingData[this.building.textureName] }, () => {
                     this.building?.removeEvents()
                     this.building = undefined
-                }, this)
+                }, this, false)
             }
         })
 
-        this.#game.on(GameEventType.MOUSELEAVE, this.position, () => {
+        this.#game.on(GameEventType.DESELECT, this.position, () => {
             this.#game.removeOverlay(this.#overlayId || "")
             this.#overlayId = undefined
         })
-        this.#game.on(GameEventType.MOUSEOVER, this.position, () => {
+        this.#game.on(GameEventType.SELECT, this.position, () => {
             if (!this.#overlayId) this.#overlayId = this.#game.addOverlay(new OutlineOverlay(this))
         })
     }
