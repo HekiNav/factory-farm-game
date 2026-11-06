@@ -6,7 +6,7 @@
         "building": []
     },
     "requirements": {
-        "corn": 200,
+        "corn": 100,
         "flour": 75
     },
     "instructions": [

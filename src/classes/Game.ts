@@ -8,6 +8,11 @@ import { isPositionInBounds, type XY, type Location, isRectInBounds } from './Ut
 import type { HarvesterBuilding } from './buildings/HarvesterBuilding';
 import { BuildableTile } from './tiles/BuildableTile';
 import type { FarmlandTile } from './tiles/FarmlandTile';
+import type { WheatCrop } from './crops/WheatCrop';
+import type { CornCrop } from './crops/CornCrop';
+import type { PumpkinCrop } from './crops/PumpkinCrop';
+
+export type AnyCrop = typeof WheatCrop | typeof CornCrop | typeof PumpkinCrop
 
 export interface GameOptions {
   grid: GridOptions,
@@ -49,6 +54,7 @@ export class Game {
   #mousePressed: boolean
   #onBuildListeners: GameEventListener[] | null = null
   #selectStart = { x: -1, y: -1 }
+  speed = 0
 
   constructor(options: GameOptions) {
     this.#canvas = this.#generateCanvas(options.container);

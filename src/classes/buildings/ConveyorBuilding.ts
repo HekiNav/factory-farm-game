@@ -51,10 +51,10 @@ export class ConveyorBuilding extends Building {
         collidingItems.forEach(i => {
             if (this.game.collidingItems({ ...this.#outputPosition, width: this.width, height: this.height }).length < 1) {
                 if (this.#outputPosition.y) {
-                    i.y += this.#outputPosition.y * 0.5
+                    i.y += this.#outputPosition.y * 0.5 * this.game.speed
                     i.x = this.x
                 } else {
-                    i.x += this.#outputPosition.x * 0.5
+                    i.x += this.#outputPosition.x * 0.5 * this.game.speed
                     i.y = this.y
                 }
             }

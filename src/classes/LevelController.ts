@@ -52,8 +52,10 @@ export class LevelController {
         alert("YOU WIN")
     }
     #levelComplete() {
-        if (this.#level >= this.#levels.length - 1) return this.#win()
-        this.#level++
-        this.#startLevel()
+        setTimeout(() => {
+            if (this.#level >= this.#levels.length - 1) return this.#win()
+            this.#level++
+            this.#startLevel()
+        }, 1000)
     }
 }

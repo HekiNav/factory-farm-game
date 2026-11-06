@@ -75,10 +75,10 @@ export class SeparatorBuilding extends Building {
             const outputPosition = this.#outputPositions[(i.textureName == "straw" || i.textureName == "pumpkin-pieces") ? 1 : 0]
             if (this.game.collidingItems({ ...outputPosition, width: this.width, height: this.height }).length < 1) {
                 if (outputPosition.y) {
-                    i.y += outputPosition.y * 0.5
+                    i.y += outputPosition.y * 0.5 * this.game.speed
                     i.x = this.x
                 } else {
-                    i.x += outputPosition.x * 0.5
+                    i.x += outputPosition.x * 0.5 * this.game.speed
                     i.y = this.y
                 }
             }

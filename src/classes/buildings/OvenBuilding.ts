@@ -60,15 +60,15 @@ export class OvenBuilding extends Building {
         const collidingItems = this.game.collidingItems(this.position)
 
         collidingItems.forEach(i => {
-            if (i.textureName == "flour" || i.textureName != "pumpkin-pieces") this.game.removeItem(i.id)
+            if (i.textureName != "bread" && i.textureName != "pumpkin-soup") this.game.removeItem(i.id)
             if (i.textureName == "pumpkin-pieces") this.game.addItem(this.x, this.y, "pumpkin-soup", time)
             if (i.textureName == "flour") this.game.addItem(this.x, this.y, "bread", time)
             if (this.game.collidingItems({ x: this.#outputPosition.x, y: this.#outputPosition.y, width: this.width, height: this.height }).length < 1) {
                 if (this.#outputPosition.y) {
-                    i.y += this.#outputPosition.y * 0.5
+                    i.y += this.#outputPosition.y * 0.5 * this.game.speed
                     i.x = this.x
                 } else {
-                    i.x += this.#outputPosition.x * 0.5
+                    i.x += this.#outputPosition.x * 0.5 * this.game.speed
                     i.y = this.y
                 }
             }

@@ -1,5 +1,5 @@
 import type { Crop } from "../bases/Crop";
-import { GameEventType, type Game } from "../Game";
+import { GameEventType, type AnyCrop, type Game } from "../Game";
 import type { TextureSheet } from "../TileSheet";
 import { TextureTile } from "./TextureTile";
 import { ROTATION, type Rotation } from "../Sprite";
@@ -39,12 +39,12 @@ export class FarmlandTile extends TextureTile {
         })
     }
     plant(cropType: string) {
-        this.crop = this.#resolveCrop(cropType, this.x, this.y, this.width, ROTATION.UP, this.textures)
+        this.crop = this.#resolveCrop(cropType, this.x, this.y, this.width, ROTATION.UP, this.textures, this.#game)
     }
     replant() {
         this.plant(this.crop?.cropType || "")
     }
-    #resolveCrop(type: string, ...params: Array<any>) {
+    #resolveCrop(type: string, ...params: ConstructorParameters<AnyCrop>) {
         if (!this.#crops[type]) {
             console.warn(`Crop of type ${type} not found, skipping planting`)
             return null

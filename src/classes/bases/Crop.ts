@@ -1,3 +1,4 @@
+import type { Game } from "../Game";
 import type { Rotation } from "../Sprite";
 import { TextureTile } from "../tiles/TextureTile";
 import type { TextureSheet } from "../TileSheet";
@@ -9,7 +10,8 @@ export class Crop extends TextureTile {
     growthStateAmount: number
     lastGrowTime: number
     cropType: string
-    constructor(x: number, y: number, size: number, rotation: Rotation, textures: TextureSheet, cropType: string, growthChance: number, growthStateAmount: number) {
+    #game: Game
+    constructor(x: number, y: number, size: number, rotation: Rotation, textures: TextureSheet, cropType: string, growthChance: number, growthStateAmount: number, game: Game) {
         // apply random rotation
         super(x, y, size, {...rotation, a: rotation.a + 90 * Math.floor(Math.random()*4)}, textures, cropType + "-0")
         this.growthState = 0
@@ -17,6 +19,7 @@ export class Crop extends TextureTile {
         this.growthChance = growthChance
         this.growthStateAmount = growthStateAmount
         this.cropType = cropType
+        this.#game = game
     }
     update(c: CanvasRenderingContext2D, scale: number, time: number) {
         this.draw(c, scale)
@@ -27,7 +30,7 @@ export class Crop extends TextureTile {
         // fully grown check
         if (this.fullyGrown) return
 
-        const amountRandomTicks = Math.floor((time - this.lastGrowTime) / 1000)
+        const amountRandomTicks = Math.floor((time - this.lastGrowTime) / 1000) * this.#game.speed
         // every second, even if game runs at <1 fps (hopefully not)
         for (let i = 0; i < amountRandomTicks; i++) {
             if (Math.random() < this.growthChance) {

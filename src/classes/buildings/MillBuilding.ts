@@ -65,10 +65,10 @@ export class MillBuilding extends Building {
             if (i.textureName == "pumpkin") this.game.addItem(this.x, this.y, "pumpkin-pieces", time)
             if (this.game.collidingItems({ x: this.#outputPosition.x, y: this.#outputPosition.y, width: this.width, height: this.height }).length < 1) {
                 if (this.#outputPosition.y) {
-                    i.y += this.#outputPosition.y * 0.5
+                    i.y += this.#outputPosition.y * 0.5 * this.game.speed
                     i.x = this.x
                 } else {
-                    i.x += this.#outputPosition.x * 0.5
+                    i.x += this.#outputPosition.x * 0.5 * this.game.speed
                     i.y = this.y
                 }
             }

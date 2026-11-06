@@ -18,8 +18,8 @@ export class DestinationTile extends TextureTile {
         this.#grid = grid
         this.#reqTiles = []
         this.#requirements = this.#grid.requirements
-        this.#requirementsFulfilled = Object.keys(this.#requirements).reduce((prev, curr, i) => {
-            this.#reqTiles.push(new TextureTile(x - size * 0.2 + Math.floor(i / 3) * size * 0.6, y + (i % 3) * size * 0.3, size * 0.35, ROTATION.UP, textures, curr, size))
+        this.#requirementsFulfilled = Object.keys(this.#requirements).reduce((prev, curr, i, a) => {
+            this.#reqTiles.push(new TextureTile(x - size * 0.5 * (Math.ceil(a.length/3)-1) + Math.floor(i / 3) * size * 0.6, y + (i % 3) * size * 0.3, size * 0.35, ROTATION.UP, textures, curr, size))
             return { ...prev, [curr]: 0 }
         }, {})
     }
@@ -31,7 +31,10 @@ export class DestinationTile extends TextureTile {
             this.#game.drawAsOverlay(t)
             const fontSize = t.height * scale * 0.5
             c.font = `${fontSize}px "Jersey 10"`
-            c.fillStyle = "#4C3C1E"
+            c.fillStyle = this.#requirementsFulfilled[t.textureName] >= this.#requirements[t.textureName] ? "#0EAA00" : "#4C3C1E"
+            c.strokeStyle = "#fff"
+            c.lineWidth = 4
+            c.strokeText(`${this.#requirementsFulfilled[t.textureName]}/${this.#requirements[t.textureName]}`, (t.x + t.width) * scale, (t.y + t.height * 0.5) * scale + fontSize * 0.4)
             c.fillText(`${this.#requirementsFulfilled[t.textureName]}/${this.#requirements[t.textureName]}`, (t.x + t.width) * scale, (t.y + t.height * 0.5) * scale + fontSize * 0.4)
         })
     }

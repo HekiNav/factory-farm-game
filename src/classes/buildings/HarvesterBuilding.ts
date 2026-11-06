@@ -80,12 +80,12 @@ export class HarvesterBuilding extends Building {
 
         collidingItems.forEach(i => {
             if (this.game.collidingItems({...this.#outputPosition, width: this.width, height: this.height}).length < 2) {
-                i.x += this.#outputPosition.x * 0.5
-                i.y += this.#outputPosition.y * 0.5
+                i.x += this.#outputPosition.x * 0.5 * this.game.speed
+                i.y += this.#outputPosition.y * 0.5 * this.game.speed
             }
         })
 
-        const pullTime = 2000 //ms
+        const pullTime = 2000 / this.game.speed //ms
         this.#pulledItems.forEach(i => {
             const elapsedSinceCreation = time - i.creationTime!
             if (elapsedSinceCreation > pullTime && collidingItems.length <= 1) {
