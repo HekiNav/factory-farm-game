@@ -3,7 +3,9 @@
         "crop": [
             "pumpkin"
         ],
-        "building": []
+        "building": [
+            "oven"
+        ]
     },
     "requirements": {
         "corn": 100,

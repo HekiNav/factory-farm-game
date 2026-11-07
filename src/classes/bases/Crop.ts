@@ -23,7 +23,7 @@ export class Crop extends TextureTile {
     }
     update(c: CanvasRenderingContext2D, scale: number, time: number) {
         this.draw(c, scale)
-        if (!this.growthStart) {
+        if (!this.growthStart || this.#game.speed === 0) {
             this.growthStart = time
             this.lastGrowTime = time
         }

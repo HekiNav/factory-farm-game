@@ -92,7 +92,7 @@ export class Game {
     this.#canvas.addEventListener("mousemove", e => this.#handleMouseMove(e))
     this.#canvas.addEventListener("mousedown", e => this.#handleMouseMove(e))
     this.#canvas.addEventListener("mouseup", e => this.#handleMouseMove(e))
-    this.#controls.fastForward.addEventListener("click", () => this.speed = 2)
+    this.#controls.fastForward.addEventListener("click", () => this.speed = 3)
     this.#controls.play.addEventListener("click", () => this.speed = 1)
     this.#controls.pause.addEventListener("click", () => this.speed = 0)
   }
