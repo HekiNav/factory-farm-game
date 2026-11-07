@@ -2,6 +2,12 @@ import { Game } from "./Game";
 import type { GridData } from "./Grid";
 import type { TextureSheet } from "./TileSheet";
 
+export type Controls = {
+    fastForward: string
+    play: string
+    pause: string
+}
+
 export class LevelController {
     #level: number
     #tileSize: number
@@ -10,7 +16,8 @@ export class LevelController {
     #overlay: string
     #textures: TextureSheet
     #levels: GridData[]
-    constructor(textures: TextureSheet, menu: string, container: string, tileSize: number, overlay: string, ...levels: GridData[]) {
+    #controls: Controls
+    constructor(textures: TextureSheet, menu: string, container: string, tileSize: number, overlay: string, controls: Controls, ...levels: GridData[]) {
         this.#menu = menu
         this.#container = container
         this.#textures = textures
@@ -18,6 +25,7 @@ export class LevelController {
         this.#level = 0
         this.#levels = levels
         this.#tileSize = tileSize
+        this.#controls = controls
         this.#startLevel()
     }
     #startLevel() {
@@ -45,6 +53,7 @@ export class LevelController {
             container: this.#container,
             menu: this.#menu,
             textures: this.#textures,
+            controls: this.#controls,
             onComplete: () => this.#levelComplete()
         }).update(0)
     }

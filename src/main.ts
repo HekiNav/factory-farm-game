@@ -23,7 +23,7 @@ Promise.all([getJson(BASE_URL + "sprites/index.json"), getLevel("level1"), getLe
 
     const textureSheet = new TextureSheet(textureImage, tileData, tileSize)
 
-    new LevelController(textureSheet, "#buildMenu", "#game", tileSize, "#overlay", ...levels as GridData[])
+    new LevelController(textureSheet, "#buildMenu", "#game", tileSize, "#overlay", {fastForward: "#fast-forward", pause: "#pause", play: "#play"}, ...levels as GridData[])
   })
 
 })

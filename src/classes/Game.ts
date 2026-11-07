@@ -11,6 +11,7 @@ import type { FarmlandTile } from './tiles/FarmlandTile';
 import type { WheatCrop } from './crops/WheatCrop';
 import type { CornCrop } from './crops/CornCrop';
 import type { PumpkinCrop } from './crops/PumpkinCrop';
+import type { Controls } from './LevelController';
 
 export type AnyCrop = typeof WheatCrop | typeof CornCrop | typeof PumpkinCrop
 
@@ -19,12 +20,18 @@ export interface GameOptions {
   container: string,
   menu: string,
   textures: TextureSheet,
-  onComplete: Function
+  onComplete: Function,
+  controls: Controls
 }
 export interface GameEventListener {
   type: GameEventType,
   position: Location,
   callback: Function
+}
+export type ControlElements = {
+    fastForward: HTMLInputElement
+    play: HTMLInputElement
+    pause: HTMLInputElement
 }
 export enum GameEventType {
   MOUSEOVER,
@@ -54,7 +61,8 @@ export class Game {
   #mousePressed: boolean
   #onBuildListeners: GameEventListener[] | null = null
   #selectStart = { x: -1, y: -1 }
-  speed = 0
+  #controls: ControlElements
+  speed = 1
 
   constructor(options: GameOptions) {
     this.#canvas = this.#generateCanvas(options.container);
@@ -71,6 +79,7 @@ export class Game {
     this.#textures = options.textures
     this.#onComplete = options.onComplete
     this.#lastMousePosition = { x: -1, y: -1 }
+    this.#controls = Object.fromEntries(Object.entries(options.controls).map(([k,v]) => [k, document.querySelector(v)])) as ControlElements
     this.#initListeners()
 
     this.#ended = false
@@ -83,6 +92,9 @@ export class Game {
     this.#canvas.addEventListener("mousemove", e => this.#handleMouseMove(e))
     this.#canvas.addEventListener("mousedown", e => this.#handleMouseMove(e))
     this.#canvas.addEventListener("mouseup", e => this.#handleMouseMove(e))
+    this.#controls.fastForward.addEventListener("click", () => this.speed = 2)
+    this.#controls.play.addEventListener("click", () => this.speed = 1)
+    this.#controls.pause.addEventListener("click", () => this.speed = 0)
   }
   #handleMouseMove(e: MouseEvent) {
     const [canvasX, canvasY] = this.#toCanvasCoords(e.clientX, e.clientY)

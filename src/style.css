@@ -26,22 +26,32 @@ canvas {
 }
 
 #play {
-  --image-position-x: 0;
+  --image-position-x: 5;
+  --image-position-y: 5;
+}
+#pause {
+  --image-position-x: 6;
   --image-position-y: 5
+}
+#fast-forward {
+  --image-position-x: 4;
+  --image-position-y: 5;
 }
 
 .ui-button {
   background-color: #4C3C1E;
-  border: 4px solid #fff;
-  padding: 0.25em;
+  outline: 2px solid #fff;
   appearance: none;
-  width: 64px;
-  height: 64px;
+  width: 32px;
+  height: 32px;
   background-image: url(/sprites/tiles.png);
   image-rendering: pixelated;
-  background-size: calc(64px * 10);
-  background-position: calc(-64px * var(--image-position-x)) calc(-64px * var(--image-position-y));
+  background-size: calc(100% * 10);
+  background-position: calc(-32px * var(--image-position-x)) calc(-32px * var(--image-position-y));
   background-repeat: no-repeat;
+}
+.ui-button:checked {
+  background-color: #94753b;
 }
 
 
