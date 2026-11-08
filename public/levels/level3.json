@@ -8,24 +8,21 @@
         "carved-pumpkin-b": 10,
         "carved-pumpkin-c": 10,
         "pumpkin-soup": 50,
-        "corn": 200,
-        "bread": 100
+        "corn": 100,
+        "bread": 150
     },
     "instructions": [
         "<div><h1>Good job on level 2! </h1> This level has some more features. <ul><li>Pumpkins</li><li>Oven</li></ul> You can use these to make bread, carved pumpkins and pumpkin soup. Flour -> Over -> Bread, Pumpkin -> Mill<br> Click to proceed"
     ],
     "map": [
-        ["gtl","gt","gt","gt","gt","gt","gt","gt","gt","gt","gt","gt","gt","gt","gt","gt","gt","gtr"],
-        ["gl" ,"ga","f" ,"f" ,"f" ,"ga","ga","ga","ga","ga","ga","ga","ga","ga","ga","ga","d" ,"gr"],
-        ["gl" ,"ga","f" ,"f" ,"f" ,"ga","ga","ga","ga","ga","ga","ga","ga","ga","ga","ga","ga","gr"],
-        ["gl" ,"ga","f" ,"f" ,"f" ,"ga","ga","ga","ga","ga","ga","ga","ga","ga","ga","ga","ga","gr"],
-        ["gl" ,"ga","f" ,"f" ,"f" ,"ga","ga","f" ,"f" ,"f" ,"ga","ga","ga","ga","f" ,"f" ,"f" ,"gr"],
-        ["gl" ,"ga","f" ,"f" ,"f" ,"ga","ga","f" ,"f" ,"f" ,"ga","ga","ga","ga","f" ,"f" ,"f" ,"gr"],
-        ["gl" ,"ga","f" ,"f" ,"f" ,"ga","ga","f" ,"f" ,"f" ,"ga","ga","ga","ga","f" ,"f" ,"f" ,"gr"],
-        ["gl" ,"ga","f" ,"f" ,"f" ,"ga","ga","f" ,"f" ,"f" ,"ga","ga","ga","ga","f" ,"f" ,"f" ,"gr"],
-        ["gl" ,"ga","f" ,"f" ,"f" ,"ga","ga","f" ,"f" ,"f" ,"ga","ga","ga","ga","f" ,"f" ,"f" ,"gr"],
-        ["gl" ,"ga","f" ,"f" ,"f" ,"ga","ga","f" ,"f" ,"f" ,"ga","ga","ga","ga","f" ,"f" ,"f" ,"gr"],
-        ["gbl","gb","gb","gb","gb","gb","gb","gb","gb","gb","gb","gb","gb","gb","gb","gb","gb","gbr"]
+        ["gtl","gt","gt","gt","gt","gt","gt","gt","gt","gt","gt","gt","gt","gt","gtr"],
+        ["gl" ,"f" ,"f" ,"f" ,"ga","ga","ga","ga","ga","ga","ga","ga","ga","d" ,"gr"],
+        ["gl" ,"f" ,"f" ,"f" ,"ga","ga","ga","ga","ga","ga","ga","ga","ga","ga","gr"],
+        ["gl" ,"f" ,"f" ,"f" ,"ga","ga","ga","ga","ga","ga","ga","ga","ga","ga","gr"],
+        ["gl" ,"f" ,"f" ,"f" ,"ga","ga","f" ,"f" ,"f" ,"ga","ga","f" ,"f" ,"f" ,"gr"],
+        ["gl" ,"f" ,"f" ,"f" ,"ga","ga","f" ,"f" ,"f" ,"ga","ga","f" ,"f" ,"f" ,"gr"],
+        ["gl" ,"f" ,"f" ,"f" ,"ga","ga","f" ,"f" ,"f" ,"ga","ga","f" ,"f" ,"f" ,"gr"],
+        ["gbl","gb","gb","gb","gb","gb","gb","gb","gb","gb","gb","gb","gb","gb","gbr"]
     ],
     "tiles": {
         "-": {

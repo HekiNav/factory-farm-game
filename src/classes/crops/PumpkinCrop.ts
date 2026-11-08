@@ -5,6 +5,6 @@ import type { TextureSheet } from "../TileSheet";
 
 export class PumpkinCrop extends Crop {
     constructor(x: number, y: number, size: number, rotation: Rotation, textures: TextureSheet, game: Game) {
-        super(x, y, size, rotation, textures, "pumpkin", 0.1, 6, game)
+        super(x, y, size, rotation, textures, "pumpkin", 0.05, 6, game)
     }
 }

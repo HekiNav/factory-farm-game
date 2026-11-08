@@ -95,6 +95,7 @@ export class Game {
     this.#controls.fastForward.addEventListener("click", () => this.speed = 3)
     this.#controls.play.addEventListener("click", () => this.speed = 1)
     this.#controls.pause.addEventListener("click", () => this.speed = 0)
+    this.#controls.play.checked = true
   }
   #handleMouseMove(e: MouseEvent) {
     const [canvasX, canvasY] = this.#toCanvasCoords(e.clientX, e.clientY)
@@ -225,9 +226,13 @@ export class Game {
     ), 1)
   }
   end() {
-    this.#canvas.remove()
-    this.#ended = true
+    this.speed = 0
     this.#onComplete()
+    this.#ended = true
+    this.#remove()
+  }
+  #remove() {
+    this.#canvas.remove()
   }
   addOverlay(overlay: OverlayCollection | Overlay) {
     this.#overlays.push(overlay)
@@ -258,7 +263,7 @@ export class Game {
       this.#onBuildListeners = []
       this.#tempEventController = new AbortController()
       this.#menu.hidden = false
-      if (tile.center.x < this.#grid.width * 0.5) {
+      if (tile.center.x < this.#grid.width * 0.3) {
         this.#menu.classList.add("right")
       } else {
         this.#menu.classList.remove("right")
