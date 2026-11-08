@@ -1,10 +1,11 @@
 # Harvest
-A modular grid-based factory/farming game made with vanilla TypeScript and HTML5 canvases
+A modular grid-based factory/farming game made with vanilla TypeScript and HTML5 canvases. Includes three levels and multiple production trees.
 
 ## Features
 - Automatical resizing
-- Modular levels, sprites and tiles
+- Modular levels, sprites, buildings, crops and tiles
 - Building placement with rotation
+- Multi-selection
 - Dynamic belt shapes
 
 ## Processing trees
@@ -30,3 +31,7 @@ Github pages [here](https://hekinav.github.io/factory-farm-game)
 2. `npm run dev`
 
 More instructions on the [Vite docs](https://vite.dev/guide/#command-line-interface)
+
+## Deployment
+
+The project is deployd on github pages via github actions. The workflow file is in `.github/workflows/build.yml`
