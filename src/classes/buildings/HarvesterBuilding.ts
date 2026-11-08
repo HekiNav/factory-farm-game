@@ -80,6 +80,7 @@ export class HarvesterBuilding extends Building {
 
         collidingItems.forEach(i => {
             if (this.game.collidingItems({...this.#outputPosition, width: this.width, height: this.height}).length < 2) {
+                i.activity(time)
                 i.x += this.#outputPosition.x * 0.5 * this.game.speed
                 i.y += this.#outputPosition.y * 0.5 * this.game.speed
             }
@@ -87,6 +88,7 @@ export class HarvesterBuilding extends Building {
 
         const pullTime = 2000 / this.game.speed //ms
         this.#pulledItems.forEach(i => {
+            i.activity(time)
             const elapsedSinceCreation = time - i.creationTime!
             if (elapsedSinceCreation > pullTime && collidingItems.length <= 1) {
                 this.game.addItem(this.x, this.y, this.#pulledItems.splice(this.#pulledItems.indexOf(i), 1)[0].textureName, time)

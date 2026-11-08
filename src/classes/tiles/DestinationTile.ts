@@ -18,7 +18,7 @@ export class DestinationTile extends TextureTile {
         this.#grid = grid
         this.#reqTiles = []
         this.#requirements = this.#grid.requirements
-        this.#requirementsFulfilled = Object.keys(this.#requirements).reduce((prev, curr, i, a) => {
+        this.#requirementsFulfilled = Object.keys(this.#requirements).reduce((prev, curr, i) => {
             this.#reqTiles.push(new TextureTile(x - Math.floor(i / 3) * size * 1, y + (i % 3-0.5) * size * 0.35, size * 0.45, ROTATION.UP, textures, curr, size))
             return { ...prev, [curr]: 0 }
         }, {})

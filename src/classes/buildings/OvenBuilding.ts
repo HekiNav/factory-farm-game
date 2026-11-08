@@ -60,6 +60,7 @@ export class OvenBuilding extends Building {
         const collidingItems = this.game.collidingItems(this.position)
 
         collidingItems.forEach(i => {
+            i.activity(time)
             if (i.textureName != "bread" && i.textureName != "pumpkin-soup") this.game.removeItem(i.id)
             if (i.textureName == "pumpkin-pieces") this.game.addItem(this.x, this.y, "pumpkin-soup", time)
             if (i.textureName == "flour") this.game.addItem(this.x, this.y, "bread", time)

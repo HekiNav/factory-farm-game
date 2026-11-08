@@ -196,7 +196,14 @@ export class Game {
 
     this.#grid.update(this.#c, this.#scale, time);
 
-    this.#items.forEach(i => i.draw(this.#c, this.#scale))
+    this.#items.forEach(i => i.update(this.#c, this.#scale))
+    this.#items.forEach((i) => {
+      const despawnTime = 60_000
+      if (this.speed != 0 && (despawnTime / this.speed) < (time - i.updateTime)) {
+        this.removeItem(i.id)
+        console.log(time, i.updateTime, despawnTime / this.speed)
+      }
+    })
 
     this.#drawAsOverlays.forEach(s => s.draw(this.#c, this.#scale))
     this.#drawAsOverlays = []

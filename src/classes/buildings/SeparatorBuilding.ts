@@ -60,6 +60,7 @@ export class SeparatorBuilding extends Building {
         const collidingItems = this.game.collidingItems(this.position)
 
         collidingItems.forEach(i => {
+            i.activity(time)
             if (i.textureName == "wheat") {
                 this.game.removeItem(i.id)
                 this.game.addItem(this.x, this.y, "straw", time)

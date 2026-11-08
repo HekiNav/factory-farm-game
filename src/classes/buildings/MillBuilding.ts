@@ -60,6 +60,7 @@ export class MillBuilding extends Building {
         const collidingItems = this.game.collidingItems(this.position)
 
         collidingItems.forEach(i => {
+            i.activity(time)
             if (i.textureName != "flour") this.game.removeItem(i.id)
             if (i.textureName == "grain") this.game.addItem(this.x, this.y, "flour", time)
             if (i.textureName == "pumpkin") this.game.addItem(this.x, this.y, "pumpkin-pieces", time)

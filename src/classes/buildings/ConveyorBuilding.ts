@@ -43,13 +43,14 @@ export class ConveyorBuilding extends Building {
         this.hideOverlay()
         this.showOverlay()
     }
-    update(c: CanvasRenderingContext2D, scale: number, _time: number): void {
+    update(c: CanvasRenderingContext2D, scale: number, time: number): void {
         this.draw(c, scale)
 
         const collidingItems = this.game.collidingItems(this.position)
 
         collidingItems.forEach(i => {
             if (this.game.collidingItems({ ...this.#outputPosition, width: this.width, height: this.height }).length < 1) {
+                i.activity(time)
                 if (this.#outputPosition.y) {
                     i.y += this.#outputPosition.y * 0.5 * this.game.speed
                     i.x = this.x
