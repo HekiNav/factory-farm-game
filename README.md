@@ -4,10 +4,23 @@ A modular grid-based factory/farming game made with vanilla TypeScript and HTML5
 ## Features
 - Automatical resizing
 - Modular levels, sprites and tiles
-- Building placement with rotation (took way too long :sob:)
+- Building placement with rotation
+- Dynamic belt shapes
+
+## Processing trees
+```
+[CORN] (No further processing options)
+
+[WHEAT]--SEPARATOR->[GRAINS]--MILL->[FLOUR]--OVEN->[BREAD]
+                  ->[STRAW]
+
+[PUMPKIN]--SEPARATOR->[PUMPKIN FLESH]--OVEN->[PUMPKIN SOUP]
+                    ->[CARVED PUMPKIN] (3 different designs)
+```
 
 ## Known bugs
-- Overlays sometimes stay even if their building is removed (only visual)
+- ~~Overlays sometimes stay even if their building is removed (only visual)~~[FIXED]
+- In rare cases, it is sometimes possible to build buildings on farmland (buildings disappear the next frame)
 ## Demo
 Github pages [here](https://hekinav.github.io/factory-farm-game)
 
