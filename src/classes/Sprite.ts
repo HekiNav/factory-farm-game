@@ -49,8 +49,8 @@ export interface Rotation {
     y: number,
     a: number
 }
-export const ROTATION: Record<string, Rotation> = {
+export const ROTATION = {
     UP: {
         x: 1, y: 1, a: 0
-    }
+    } as const
 }

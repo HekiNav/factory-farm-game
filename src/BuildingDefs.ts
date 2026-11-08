@@ -14,6 +14,7 @@ export const buildings = {
   "oven": OvenBuilding,
   "mill": MillBuilding
 }
+export type AnyBuilding = HarvesterBuilding | ConveyorBuilding | TrashcanBuilding | SeparatorBuilding | OvenBuilding | MillBuilding
 export const buildingData: Record<string, ObjectDetails> = {
   "harvester": {
     title: "Harvester",

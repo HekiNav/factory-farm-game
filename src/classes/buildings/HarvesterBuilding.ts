@@ -22,7 +22,7 @@ export class HarvesterBuilding extends Building {
 
         this.affectedPositions = this.#getAffectedPositions()
 
-        this.#outputPosition = this.#getOutputPosition()
+        this.#outputPosition = this.getOutputPosition()
 
         if (!events) return
         this.game.on(GameEventType.HOVER, this.position, () => this.showOverlay())
@@ -32,7 +32,7 @@ export class HarvesterBuilding extends Building {
         this.game.off(GameEventType.HOVER, this.position, () => this.showOverlay())
         this.game.off(GameEventType.DEHOVER, this.position, () => this.hideOverlay())
     }
-    #getOutputPosition() {
+    getOutputPosition() {
         return rotateRelativePosition({x: 0, y: 0}, { x: 1, y: 0 }, this.rotation.a, this.width) as XY
     }
     #getAffectedPositions() {
@@ -62,7 +62,7 @@ export class HarvesterBuilding extends Building {
         this.rotation = newRot
         this.affectedPositions = this.#getAffectedPositions()
 
-        this.#outputPosition = this.#getOutputPosition()
+        this.#outputPosition = this.getOutputPosition()
 
         this.hideOverlay()
         this.showOverlay()

@@ -14,8 +14,8 @@ export class SeparatorBuilding extends Building {
     constructor(x: number, y: number, size: number, rotation: Rotation, textures: TextureSheet, game: Game, grid: Grid, events = true) {
         super(x, y, size, rotation, textures, "separator", game, grid)
 
-        this.#outputPositions = this.#getOutputPositions()
-        this.#inputPosition = this.#getInputPosition()
+        this.#outputPositions = this.getOutputPositions()
+        this.#inputPosition = this.getInputPosition()
 
         if (!events) return
         this.game.on(GameEventType.HOVER, this.position, () => this.showOverlay())
@@ -25,10 +25,10 @@ export class SeparatorBuilding extends Building {
         this.game.off(GameEventType.HOVER, this.position, () => this.showOverlay())
         this.game.off(GameEventType.DEHOVER, this.position, () => this.hideOverlay())
     }
-    #getOutputPositions() {
+    getOutputPositions() {
         return [rotateRelativePosition({ x: 0, y: 0 }, { x: 1, y: 0 }, this.rotation.a, this.width) as XY, rotateRelativePosition({ x: 0, y: 0 }, { x: 0, y: -1 }, this.rotation.a, this.width) as XY]
     }
-    #getInputPosition() {
+    getInputPosition() {
         return rotateRelativePosition({ x: 0, y: 0 }, { x: -1, y: 0 }, this.rotation.a, this.width) as XY
     }
     showOverlay() {
@@ -48,8 +48,8 @@ export class SeparatorBuilding extends Building {
     setRotation(newRot: Rotation) {
         this.rotation = newRot
 
-        this.#outputPositions = this.#getOutputPositions()
-        this.#inputPosition = this.#getInputPosition()
+        this.#outputPositions = this.getOutputPositions()
+        this.#inputPosition = this.getInputPosition()
 
         this.hideOverlay()
         this.showOverlay()
